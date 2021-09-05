@@ -1,0 +1,30 @@
+.nav {
+    &.social {
+        //@include film-grain;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100%;
+        color: white;
+        ul {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            list-style-type: none;
+            height: 100%;
+        }
+        a {
+            display: block;
+            color: $skull-gray;
+            font-size: 3vmin;
+            transition: color 0.3s ease-in-out;
+            padding: 0.666vmin;
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}

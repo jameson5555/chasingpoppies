@@ -1,3 +1,15 @@
+# Chasing Poppies Website
+
+## FTP Deploy
+- ftp deploy: https://github.com/git-ftp/git-ftp < go here for first deploy steps
+- brew install git-ftp
+- while developing, just do git-ftp push
+- syncing from /dist: git config git-ftp.syncroot dist/
+- git ftp push --user [username] --passwd [password] ftp://chasingpoppies.com/public_html/
+
+for new computers, need new key: https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
+
+
 # Static Website Template
 
 This is a template for creating simple static websites without JS frameworks.

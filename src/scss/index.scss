@@ -1,2 +1,6 @@
-@import 'colors.scss';
-@import 'global.scss';
+@import 'variables.scss';
+@import 'keyframes.scss';
+@import 'mixins.scss';
+@import 'components/global.scss';
+@import 'components/nav.scss';
+@import 'components/panes.scss';

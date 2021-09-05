@@ -1,0 +1,36 @@
+.pane {
+    padding: 50px 0;
+    min-height: calc(100vh - 100px);
+    text-align: center;
+    &.masthead {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        h1 {
+            font-family: 'impact_label_reversedregular';
+            font-size: 5vmin;
+            line-height: 1em;
+            font-weight: normal;
+            display: block;
+            color: $skull-gray;
+            margin-top: 0.5vh;
+        }
+        img {
+            width: 40vmin;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+    &.videos {
+        .video-container {
+            width: 80vmin;
+            margin: 0 auto;
+            @include aspect-ratio(6, 9);
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

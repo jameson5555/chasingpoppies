@@ -5,7 +5,6 @@
         position: fixed;
         top: 0;
         right: 0;
-        width: 100px;
         height: 100%;
         color: white;
         ul {
@@ -21,7 +20,7 @@
             color: $skull-gray;
             font-size: 3vmin;
             transition: color 0.3s ease-in-out;
-            padding: 0.666vmin;
+            padding: 0.666vmin 2vmin;
             &:hover {
                 color: white;
             }

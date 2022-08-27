@@ -24,7 +24,7 @@
     }
     &.videos {
         .video-container {
-            width: 80vmin;
+            width: 98vmin;
             margin: 0 auto;
             @include aspect-ratio(6, 9);
         }

@@ -1,6 +1,6 @@
 .pane {
     padding: 10vw;
-    min-height: 95vh;
+    min-height: 90vh;
     text-align: center;
     &.masthead {
         display: flex;
@@ -41,6 +41,11 @@
         }
     }
     &.events {
-        
+        .flyer {
+            max-height: 80vh;
+            max-width: 80vw;
+            display: block;
+            margin: 16px auto;
+        }
     }
 }

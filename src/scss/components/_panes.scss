@@ -4,11 +4,14 @@
     text-align: center;
     h2 {
         margin-bottom: 4vh;
-        font-size: 4vmin;
+        font-size: 5vmin;
         line-height: 1em;
         font-weight: normal;
         display: block;
         color: $skull-gray;
+        position: relative;
+        overflow: hidden;
+        @include prism;
     }
     &.masthead {
         display: flex;
@@ -20,15 +23,15 @@
         overflow: hidden;
         h1 {
             font-family: 'impact_label_reversedregular';
-            font-size: 5vmin;
+            font-size: 7vmin;
             line-height: 1em;
             font-weight: normal;
             display: block;
             color: $skull-gray;
-            margin-top: 0.5vh;
+            margin-top: 2vh;
         }
         img {
-            width: 50vmin;
+            width: 60vmin;
             display: block;
             margin: 0 auto;
         }

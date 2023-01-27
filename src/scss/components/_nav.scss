@@ -20,13 +20,10 @@
             color: $skull-gray;
             font-size: 5vmin;
             transition: color 0.3s ease-in-out;
-            padding: 0.666vmin 3vmin;
+            padding: 2vmin 3vmin;
             &:hover {
                 color: white;
             }
-            // @include media-breakpoint-up(md) {
-            //     font-size: 3vmin;
-            // }
         }
     }
 }

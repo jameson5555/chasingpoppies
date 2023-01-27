@@ -6,3 +6,13 @@
     70% {transform: translate(9%,4%);}
     90% {transform: translate(-1%,7%);}
 }
+
+@keyframes prism {
+	0% {background: red;}
+	17% {background: orange;}
+	34% {background: yellow;}
+	51% {background: green;}
+	68% {background: blue;}
+    85% {background: indigo;}
+    100% {background: violet;}
+}

@@ -2,12 +2,20 @@
     padding: 10vw;
     min-height: 90vh;
     text-align: center;
+    h2 {
+        margin-bottom: 4vh;
+        font-size: 4vmin;
+        line-height: 1em;
+        font-weight: normal;
+        display: block;
+        color: $skull-gray;
+    }
     &.masthead {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        @include film-grain;
+        @include prism;
         position: relative;
         overflow: hidden;
         h1 {
@@ -31,7 +39,7 @@
             max-width: 98vmin;
             margin: 0 auto;
             @include aspect-ratio(9, 16);
-            box-shadow: 0 0 100px 10px $poppy-red;
+            box-shadow: 0 0 50px 0 $poppy-red;
             border-radius: 10px;
             overflow: hidden;
         }
@@ -42,10 +50,17 @@
     }
     &.events {
         .flyer {
-            max-height: 80vh;
-            max-width: 80vw;
             display: block;
             margin: 16px auto;
+            + .flyer {
+                margin-top: 7vh;
+            }
+            img {
+                display: block;
+                max-height: 80vh;
+                max-width: 80vw;
+                margin: 0 auto;
+            }
         }
     }
 }

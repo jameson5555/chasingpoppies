@@ -42,6 +42,10 @@ a {
     color: white;
     text-decoration: underline;
     &:hover {
+        color: white;
         text-decoration: none;
+    }
+    &:visited {
+        color: white;
     }
 }

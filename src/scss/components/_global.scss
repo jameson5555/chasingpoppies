@@ -38,4 +38,10 @@ body{
     color: white;
     font-family: 'impact_label_reversedregular', sans-serif;
 }
-
+a {
+    color: white;
+    text-decoration: underline;
+    &:hover {
+        text-decoration: none;
+    }
+}

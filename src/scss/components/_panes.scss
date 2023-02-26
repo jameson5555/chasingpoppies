@@ -11,7 +11,7 @@
         color: $skull-gray;
         position: relative;
         overflow: hidden;
-        @include prism;
+        //@include prism;
     }
     &.masthead {
         display: flex;

@@ -4,14 +4,16 @@
     text-align: center;
     h2 {
         margin-bottom: 4vh;
-        font-size: 5vmin;
+        font-size: 8vmin;
         line-height: 1em;
         font-weight: normal;
         display: block;
         color: $skull-gray;
         position: relative;
         overflow: hidden;
-        //@include prism;
+        @include media-breakpoint-up(md) {
+            font-size: 5vmin;
+        }
     }
     &.masthead {
         display: flex;
@@ -23,12 +25,15 @@
         overflow: hidden;
         h1 {
             font-family: 'impact_label_reversedregular';
-            font-size: 7vmin;
+            font-size: 8vmin;
             line-height: 1em;
             font-weight: normal;
             display: block;
             color: $skull-gray;
             margin-top: 2vh;
+            @include media-breakpoint-up(md) {
+                font-size: 7vmin;
+            }
         }
         img {
             width: 60vmin;

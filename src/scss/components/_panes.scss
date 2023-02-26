@@ -34,6 +34,9 @@
             width: 60vmin;
             display: block;
             margin: 0 auto;
+            @include media-breakpoint-up(md) {
+                width: 50vmin;
+            }
         }
     }
     &.videos {

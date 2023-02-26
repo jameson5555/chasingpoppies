@@ -8,11 +8,12 @@
 }
 
 @keyframes prism {
-	0% {background: red;}
-	17% {background: orange;}
-	34% {background: yellow;}
-	51% {background: green;}
-	68% {background: blue;}
-    85% {background: indigo;}
-    100% {background: violet;}
+    0% {background: transparent;}
+	15% {background: blue;}
+    30% {background: indigo;}
+    45% {background: violet;}
+    60% {background: red;}
+	70% {background: orange;}
+	85% {background: yellow;}
+	100% {background: green;}
 }

@@ -1,0 +1,26 @@
+// https://www.sociablekit.com/app/users/widgets/update_embed/120132#css
+
+.sk-ww-youtube-channel-videos {
+    .sk-ww-youtube-channel-videos-item-content {
+        border-radius: 0 !important;
+    }
+    .sk-ww-youtube-channel-videos-item {
+        font-family: 'impact_label_reversedregular', sans-serif !important;
+        display: flex;
+        justify-content: center;
+        .sk-yt-actual-title {
+            font-weight: normal;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            height: auto;
+        }
+        &:hover {
+            .sk-yt-actual-title {
+                opacity: 1;
+            }
+        }
+    }
+}

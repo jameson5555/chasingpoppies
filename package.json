@@ -46,7 +46,7 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "bootstrap": "^5.2.0",
+    "bootstrap": "^5.2.3",
     "dart-sass": "^1.25.0"
   }
 }

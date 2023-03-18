@@ -1,6 +1,10 @@
 // https://www.sociablekit.com/app/users/widgets/update_embed/120132#css
 
 .sk-ww-youtube-channel-videos {
+    background-color: transparent !important;
+    .youtube-user-root-container {
+        display: none;
+    }
     .sk-ww-youtube-channel-videos-item-content {
         border-radius: 0 !important;
     }
@@ -16,11 +20,42 @@
             position: absolute;
             top: 0;
             height: auto;
+            color: $skull-gray !important;
         }
         &:hover {
             .sk-yt-actual-title {
                 opacity: 1;
             }
+        }
+    }
+    .sk-yt-bottom-btn-container,
+    .sk_branding {
+        display: none !important;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+        font-size: 0 !important;
+        opacity: 0;
+        padding: 0 !important;
+    }
+}
+
+// modal
+body .mfp-close-btn-in .mfp-close {
+    top: 5px;
+    right: 3px;
+    color: $skull-gray;
+    display: none;
+}
+.sk_pop_up_content {
+    box-shadow: 0 0 50px 0 $poppy-red;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    .sk_youtube_channel_popup_container {
+        background: transparent !important;
+        .sk-yt-pop-up-content {
+            display: none;
         }
     }
 }

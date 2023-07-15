@@ -54,6 +54,7 @@
 
 // modal
 body .mfp-close-btn-in .mfp-close {
+    position: fixed;
     top: 10px !important;
     right: 10px !important;
     color: $skull-gray;

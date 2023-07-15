@@ -5,27 +5,39 @@
     .youtube-user-root-container {
         display: none;
     }
+    .sk-yt-all-posts {
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        @include media-breakpoint-up(sm) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
     .sk-ww-youtube-channel-videos-item-content {
         border-radius: 0 !important;
     }
     .sk-ww-youtube-channel-videos-item {
         font-family: 'impact_label_reversedregular', sans-serif !important;
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        .sk-yt-actual-title {
+        background: transparent !important;
+        margin: 0px !important;
+        .sk-yt-actual-title,
+        .sk-title-padding {
             font-weight: normal;
-            opacity: 0;
+            line-height: 1.2em;
             transition: opacity 0.5s ease;
-            padding: 10px;
-            position: absolute;
-            top: 0;
+            padding: 10px 0 !important;
             height: auto;
             color: $skull-gray !important;
-        }
-        &:hover {
-            .sk-yt-actual-title {
-                opacity: 1;
+            .sk-title-container {
+                color: inherit !important;
+                line-height: inherit !important;
             }
+        }
+        .sk-yt-post-hover {
+            background: transparent !important;
         }
     }
     .sk-yt-bottom-btn-container,

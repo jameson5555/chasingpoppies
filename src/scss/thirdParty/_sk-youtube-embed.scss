@@ -54,10 +54,9 @@
 
 // modal
 body .mfp-close-btn-in .mfp-close {
-    top: 5px;
-    right: 3px;
+    top: 10px !important;
+    right: 10px !important;
     color: $skull-gray;
-    display: none;
 }
 .sk_pop_up_content {
     box-shadow: 0 0 50px 0 $poppy-red;

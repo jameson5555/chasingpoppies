@@ -60,6 +60,11 @@
         }
     }
     &.events {
+        .event-wrapper {
+            + .event-wrapper {
+                margin-top: 7vh;
+            }
+        }
         .flyer {
             display: block;
             margin: 16px auto;

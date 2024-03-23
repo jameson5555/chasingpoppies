@@ -55,13 +55,14 @@ a {
     position: absolute;
     top: 2vmin;
     right: 2vmin;
-    font-size: 16px;
+    font-size: 12px;
     z-index: 1;
 }
 .btn {
     background: black;
     border: 1px solid $skull-gray;
     color: $skull-gray;
+    padding: 2px 6px;
     &:visited {
         color: $skull-gray;
     }

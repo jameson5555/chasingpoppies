@@ -29,7 +29,6 @@ body {
     height: 100%;
     width: 100%;
     //transform: translateX(0);
-    position: relative;
 }
 html {
     font-display: swap;
@@ -61,7 +60,7 @@ a {
 }
 .btn {
     background: black;
-    border-color: $skull-gray;
+    border: 1px solid $skull-gray;
     color: $skull-gray;
     &:visited {
         color: $skull-gray;

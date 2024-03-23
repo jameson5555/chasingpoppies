@@ -55,7 +55,7 @@
 // modal
 body .mfp-close-btn-in .mfp-close {
     position: fixed;
-    top: 10px !important;
+    top: 20px !important;
     right: 10px !important;
     color: $skull-gray;
 }
@@ -64,10 +64,15 @@ body .mfp-close-btn-in .mfp-close {
     padding: 0;
     border-radius: 8px;
     overflow: hidden;
+    background: black;
     .sk_youtube_channel_popup_container {
         background: transparent !important;
         .sk-yt-pop-up-content {
             display: none;
         }
     }
+}
+
+.share-modal-wrapper {
+    display: none !important; // garbage added by sk-youtube-embed
 }

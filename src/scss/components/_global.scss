@@ -53,10 +53,13 @@ a {
 }
 .upload-link {
     position: absolute;
-    top: 4vmin;
+    top: 2vmin;
     right: 2vmin;
     font-size: 12px;
     z-index: 1;
+    @include media-breakpoint-down(sm) {
+        top: 4vmin;
+    }
 }
 .btn {
     background: black;

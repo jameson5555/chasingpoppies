@@ -64,11 +64,11 @@ a {
 .btn {
     background: black;
     border: 1px solid $skull-gray;
-    color: $skull-gray;
+    color: white;
     padding: 2px 8px;
     font-size: 1.2rem;
     &:visited {
-        color: $skull-gray;
+        color: white;
     }
     &:hover {
         color: white;

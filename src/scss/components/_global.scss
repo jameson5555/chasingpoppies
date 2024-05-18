@@ -65,7 +65,8 @@ a {
     background: black;
     border: 1px solid $skull-gray;
     color: $skull-gray;
-    padding: 2px 6px;
+    padding: 2px 8px;
+    font-size: 1.2rem;
     &:visited {
         color: $skull-gray;
     }

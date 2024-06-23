@@ -9,6 +9,8 @@
 
 for new computers, need new key: https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
 
+# Updating youtube embed
+- https://www.sociablekit.com/app/users/widgets/update_embed/120132
 
 # Static Website Template
 

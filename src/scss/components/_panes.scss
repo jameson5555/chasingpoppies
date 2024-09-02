@@ -12,7 +12,7 @@
         position: relative;
         overflow: hidden;
         @include media-breakpoint-up(md) {
-            font-size: 5vmin;
+            font-size: 6vmin;
         }
     }
     &.masthead {

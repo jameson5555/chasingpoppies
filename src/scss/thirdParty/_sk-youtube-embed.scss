@@ -53,11 +53,20 @@
 }
 
 // modal
-body .mfp-close-btn-in .mfp-close {
-    position: fixed;
-    top: 20px !important;
-    right: 10px !important;
-    color: $skull-gray;
+body {
+    .mfp-close-btn-in .mfp-close {
+        position: fixed;
+        top: 20px !important;
+        right: 20px !important;
+        color: $skull-gray;
+    }
+    .mfp-container {
+        display: flex;
+        overflow: auto;
+    }
+    .mfp-content {
+        margin: auto;
+    }
 }
 .sk_pop_up_content {
     box-shadow: 0 0 50px 0 $poppy-red;

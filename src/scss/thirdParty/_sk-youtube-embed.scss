@@ -12,6 +12,9 @@
         @include media-breakpoint-up(sm) {
             grid-template-columns: 1fr 1fr;
         }
+        > :first-child {
+            display: none;
+        }
     }
     .sk-ww-youtube-channel-videos-item-content {
         border-radius: 0 !important;

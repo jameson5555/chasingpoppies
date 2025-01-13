@@ -12,7 +12,7 @@
         @include media-breakpoint-up(sm) {
             grid-template-columns: 1fr 1fr;
         }
-        > :first-child {
+        > :nth-child(2) {
             display: none;
         }
     }

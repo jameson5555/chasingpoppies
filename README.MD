@@ -34,6 +34,10 @@ The compiled files will go to the directory "/dist"
 
 ## Getting Started
 
+```
+nvm use 18.18.0 # if errors, run npm update and/or npm install
+```
+
 1. Install dependencies
 ```
 npm install

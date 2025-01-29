@@ -1,5 +1,7 @@
-import { logSomething } from "./module";
+import { loadVideos } from "./videos";
+import { playVideo } from "./videos";
 
-logSomething("Hello World");
+loadVideos();
+playVideo();
 
 //import { bootstrap } from "bootstrap";

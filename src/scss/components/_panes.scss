@@ -80,4 +80,22 @@
             }
         }
     }
+    &.merch {
+        .merch-wrapper {
+            padding-top: 1vh;
+        }
+        a {
+            display: block;
+            margin: 0 auto;
+            max-width: 70%;
+            @include media-breakpoint-up(lg) {
+                max-width: 50%;
+            }
+            img {
+                display: block;
+                width: 100%;
+            }
+        }
+        
+    }
 }

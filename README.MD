@@ -43,6 +43,15 @@ git config git-ftp.syncroot dist/
 ```
 - `npm run deploy` and `npm run deploy:dry-run` now fail early if your repo has uncommitted changes.
 
+### Fallback: manual ZIP deploy (if FTP writes 0-byte files)
+1. Build and package:
+```
+npm run deploy:package
+```
+2. In hosting File Manager, go to `public_html/`, upload `deploy/chasingpoppies-dist.zip`, then Extract.
+3. Verify `public_html/index.html`, `public_html/index.css`, and `public_html/bundle.js` are non-zero bytes.
+4. Remove the uploaded zip from `public_html/`.
+
 for new computers, need new key: https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
 
 # Updating youtube embed

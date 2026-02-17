@@ -27,7 +27,9 @@
     "deploy:check:syncroot": "sh -c 'v=$(git config --get git-ftp.syncroot || true); [ \"$v\" = \"dist/\" ] || { echo \"Expected git-ftp.syncroot=dist/ but got ${v:-<empty>}\"; exit 1; }'",
     "deploy:check:clean": "sh -c 'git diff --quiet && git diff --cached --quiet || { echo \"Commit or stash changes before deploy.\"; exit 1; }'",
     "deploy:dry-run": "npm run build && npm run deploy:check:syncroot && npm run deploy:check:clean && git ftp push --dry-run --verbose",
-    "deploy": "npm run build && npm run deploy:check:syncroot && npm run deploy:check:clean && git ftp push"
+    "deploy": "npm run build && npm run deploy:check:syncroot && npm run deploy:check:clean && git ftp push",
+    "deploy:package": "npm run build && rm -f deploy/chasingpoppies-dist.zip && mkdir -p deploy && cd dist && zip -r ../deploy/chasingpoppies-dist.zip .",
+    "deploy:package:clean": "rm -f deploy/chasingpoppies-dist.zip"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.8.4",

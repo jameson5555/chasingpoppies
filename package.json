@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "css:autoprefixer": "postcss -u autoprefixer -r dist/*.css",
-    "css:scss": "node-sass --output-style compressed -o dist src/scss",
+    "css:scss": "sass --no-source-map --style=compressed --load-path=node_modules src/scss:dist",
     "css:lint": "stylelint src/scss/*.scss --syntax scss",
     "build:css": "npm run css:lint && npm run css:scss && npm run css:autoprefixer",
     "build:js": "webpack --mode=production",
@@ -23,7 +23,11 @@
     "watch:html": "onchange \"src/views\" -- npm run build:html",
     "watch:images": "onchange \"src/images\" -- npm run build:images",
     "watch:js": "onchange \"src/js\" -- webpack --mode=development",
-    "watch": "run-p serve watch:*"
+    "watch": "run-p serve watch:*",
+    "deploy:check:syncroot": "sh -c 'v=$(git config --get git-ftp.syncroot || true); [ \"$v\" = \"dist/\" ] || { echo \"Expected git-ftp.syncroot=dist/ but got ${v:-<empty>}\"; exit 1; }'",
+    "deploy:check:clean": "sh -c 'git diff --quiet && git diff --cached --quiet || { echo \"Commit or stash changes before deploy.\"; exit 1; }'",
+    "deploy:dry-run": "npm run build && npm run deploy:check:syncroot && npm run deploy:check:clean && git ftp push --dry-run --verbose",
+    "deploy": "npm run build && npm run deploy:check:syncroot && npm run deploy:check:clean && git ftp push"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.8.4",

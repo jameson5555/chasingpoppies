@@ -1,11 +1,47 @@
 # Chasing Poppies Website
 
 ## FTP Deploy
-- ftp deploy: https://github.com/git-ftp/git-ftp < go here for first deploy steps
-- brew install git-ftp
-- while developing, just do git-ftp push
-- syncing from /dist: git config git-ftp.syncroot dist/
-- git ftp push --user [username] --passwd [password] ftp://chasingpoppies.com/public_html/
+- git-ftp docs: https://github.com/git-ftp/git-ftp
+
+### First-time setup (per computer)
+1. Install git-ftp
+```
+brew install git-ftp
+```
+2. Configure deploy target
+```
+git config git-ftp.syncroot dist/
+git config git-ftp.url ftp://chasingpoppies.com/public_html
+git config git-ftp.user <username>
+git config git-ftp.password <password>
+```
+3. Initialize remote deploy state (only once per remote)
+```
+git ftp init
+```
+
+### Routine deploy
+1. Commit your changes
+```
+git add -A
+git commit -m "your deploy message"
+```
+2. Build + preview upload list
+```
+npm run deploy:dry-run
+```
+3. Deploy
+```
+npm run deploy
+```
+
+### Notes
+- Deploy always ships the built `dist/` files to `public_html/`.
+- If `npm run deploy` says `syncroot` is wrong, re-run:
+```
+git config git-ftp.syncroot dist/
+```
+- `npm run deploy` and `npm run deploy:dry-run` now fail early if your repo has uncommitted changes.
 
 for new computers, need new key: https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
 

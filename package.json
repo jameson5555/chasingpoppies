@@ -16,7 +16,7 @@
     "build:css": "npm run css:lint && npm run css:scss && npm run css:autoprefixer",
     "build:js": "webpack --mode=production",
     "build:html": "posthtml -c posthtml.json",
-    "build:images": "imagemin src/images/**/* --out-dir=dist/images",
+    "build:images": "mkdir -p dist/images && cp -R src/images/* dist/images/ || true",
     "build:fonts": "mkdir -p dist/fonts && cp -R src/fonts/* dist/fonts/ || true",
     "build": "run-s build:css build:js build:html build:images build:fonts",
     "serve": "browser-sync start --server \"dist\" --files \"dist\"",

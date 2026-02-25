@@ -59,11 +59,17 @@ export const loadVideos = () => {
         const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoIds.join(',')}&key=${apiKey}`);
         const data = await response.json();
         
+        console.log("Videos duration API response:", data);
+
         // return map of id -> duration in seconds
-        return data.items.reduce((acc, item) => {
+        const map = data.items.reduce((acc, item) => {
             acc[item.id] = parseDurationStr(item.contentDetails.duration);
             return acc;
         }, {});
+        
+        console.log("Parsed durations map:", map);
+        
+        return map;
     }
 
     async function fetchVideoList(playlistId, apiKey) {
@@ -82,9 +88,11 @@ export const loadVideos = () => {
         // Filter out videos that are 60 seconds or shorter (YouTube Shorts)
         const regularVideos = data.items.filter(item => {
             const durationInSeconds = durationsMap[item.contentDetails.videoId];
+            console.log(`Video ${item.contentDetails.videoId} is ${durationInSeconds} seconds long`);
             return durationInSeconds > 60;
         });
 
+        console.log("Filtered regular videos:", regularVideos);
         return regularVideos;
     }
 

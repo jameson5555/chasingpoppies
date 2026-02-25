@@ -1,6 +1,7 @@
+/* global process */
 export const loadVideos = () => {
     const channelId = "UCwXXkWcM7_O1M5U2is5q18g";
-    const apiKey = "AIzaSyBQYf2y1M0OXDzXV8ePT-cZhzIHJLEVFW0";
+    const apiKey = process.env.YOUTUBE_API_KEY;
 
     async function embedChannelVideos() {
         const playlistId = await getUploadsPlaylistId(channelId, apiKey); // Function to fetch playlist ID

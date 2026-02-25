@@ -1,9 +1,16 @@
+const webpack = require('webpack');
+
 module.exports = {
     entry: './src/js/main.js',
     output: {
         path: __dirname + '/dist',
         filename: 'bundle.js'
     },
+    plugins: [
+        new webpack.EnvironmentPlugin({
+            YOUTUBE_API_KEY: ''
+        })
+    ],
     module: {
         rules: [
             {

@@ -51,6 +51,7 @@
     "dart-sass": "^1.25.0"
   },
   "overrides": {
-    "yargs-parser": "21.1.0"
+    "yargs-parser": "21.1.0",
+    "yargs": "17.7.1"
   }
 }

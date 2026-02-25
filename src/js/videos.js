@@ -44,11 +44,48 @@ export const loadVideos = () => {
         return data.items[0].contentDetails.relatedPlaylists.uploads;
     }
 
+    // Helper function to parse ISO 8601 duration (e.g. PT1M5S) to seconds
+    function parseDurationStr(duration) {
+        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+        
+        let hours = (parseInt(match[1]) || 0);
+        let minutes = (parseInt(match[2]) || 0);
+        let seconds = (parseInt(match[3]) || 0);
+
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
+    async function fetchVideoDurations(videoIds, apiKey) {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoIds.join(',')}&key=${apiKey}`);
+        const data = await response.json();
+        
+        // return map of id -> duration in seconds
+        return data.items.reduce((acc, item) => {
+            acc[item.id] = parseDurationStr(item.contentDetails.duration);
+            return acc;
+        }, {});
+    }
+
     async function fetchVideoList(playlistId, apiKey) {
         const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails,snippet&playlistId=${playlistId}&key=${apiKey}&maxResults=50`);
         const data = await response.json();
-        data.items = data.items.filter(item => item.snippet.description); // remove shorts
-        return data.items;
+        
+        // Initial filter to remove absolute garbage without descriptions
+        data.items = data.items.filter(item => item.snippet.description);
+        
+        // Extract IDs for fetching actual duration
+        const videoIds = data.items.map(item => item.contentDetails.videoId);
+        
+        // Get durations in a single batch call
+        const durationsMap = await fetchVideoDurations(videoIds, apiKey);
+
+        // Filter out videos that are 60 seconds or shorter (YouTube Shorts)
+        const regularVideos = data.items.filter(item => {
+            const durationInSeconds = durationsMap[item.contentDetails.videoId];
+            return durationInSeconds > 60;
+        });
+
+        return regularVideos;
     }
 
     // Call the function to embed videos

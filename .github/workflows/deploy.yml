@@ -35,4 +35,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
         # Optional: Set this to your destination directory in cPanel (e.g. /public_html/)
-        server-dir: /public_html/
+        # server-dir: /public_html/

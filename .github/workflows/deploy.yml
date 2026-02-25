@@ -36,5 +36,6 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
+        dangerous-clean-slate: true
         # Optional: Set this to your destination directory in cPanel (e.g. /public_html/)
         # server-dir: /public_html/

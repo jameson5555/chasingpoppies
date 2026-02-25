@@ -87,13 +87,16 @@ export const loadVideos = () => {
 
         // Filter out videos that are 60 seconds or shorter (YouTube Shorts)
         const regularVideos = data.items.filter(item => {
-            const durationInSeconds = durationsMap[item.contentDetails.videoId];
-            console.log(`Video ${item.contentDetails.videoId} is ${durationInSeconds} seconds long`);
+            const videoId = item.contentDetails.videoId;
+            const durationInSeconds = durationsMap[videoId];
+            console.log(`Video ${videoId} is ${durationInSeconds} seconds long`);
             return durationInSeconds > 60;
         });
 
         console.log("Filtered regular videos:", regularVideos);
-        return regularVideos;
+        
+        // Ensure we only ever return exactly 12 items for the UI
+        return regularVideos.slice(0, 12);
     }
 
     // Call the function to embed videos

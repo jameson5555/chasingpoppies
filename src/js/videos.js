@@ -1,109 +1,80 @@
 /* global process */
-export const loadVideos = () => {
-    const channelId = "UCwXXkWcM7_O1M5U2is5q18g";
-    const apiKey = process.env.YOUTUBE_API_KEY;
+const channelId = "UCwXXkWcM7_O1M5U2is5q18g";
+const apiKey = process.env.YOUTUBE_API_KEY;
 
-    async function embedChannelVideos() {
-        const playlistId = await getUploadsPlaylistId(channelId, apiKey); // Function to fetch playlist ID
-        const videoList = await fetchVideoList(playlistId, apiKey); // Function to fetch video list
-        const container = document.getElementById("video-container"); // Your container element
-
-        // render the first 12 videos
-        videoList.slice(0, 12).forEach(video => {
-            const iframe = document.createElement("iframe");
-            const videoItem = document.createElement("div");
-            const thumbnail = document.createElement("img");
-            const icon = document.createElement("i");
-
-            iframe.src = `https://www.youtube.com/embed/${video.contentDetails.videoId}?rel=0`;
-            iframe.width = "560";
-            iframe.height = "315";
-            iframe.style.border = "0";
-            iframe.allowFullscreen = true;
-
-            videoItem.classList.add("video-item", "ratio", "ratio-16x9");
-            videoItem.appendChild(iframe);
-
-            if (!('ontouchstart' in window || navigator.maxTouchPoints)) {
-                thumbnail.src = video.snippet.thumbnails.standard.url;
-                thumbnail.alt = video.snippet.title;
-                videoItem.appendChild(thumbnail);
-
-                icon.classList.add("fab", "fa-youtube");
-                videoItem.appendChild(icon);
-            }
-
-            container.appendChild(videoItem);
-        });
+async function fetchJson(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`YouTube request failed with ${response.status}`);
     }
+    return response.json();
+}
 
-    // Helper functions to fetch playlist ID and video list
-    async function getUploadsPlaylistId(channelId, apiKey) {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${apiKey}&maxResults=50`);
-        const data = await response.json();
-        return data.items[0].contentDetails.relatedPlaylists.uploads;
-    }
+function durationInSeconds(duration) {
+    const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+    if (!match) return 0;
+    return (Number(match[1] || 0) * 3600) + (Number(match[2] || 0) * 60) + Number(match[3] || 0);
+}
 
-    // Helper function to parse ISO 8601 duration (e.g. PT1M5S) to seconds
-    function parseDurationStr(duration) {
-        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-        
-        let hours = (parseInt(match[1]) || 0);
-        let minutes = (parseInt(match[2]) || 0);
-        let seconds = (parseInt(match[3]) || 0);
+async function getLatestVideos() {
+    const channel = await fetchJson(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${apiKey}`);
+    if (!channel.items || !channel.items[0]) throw new Error("YouTube channel was not found");
 
-        return hours * 3600 + minutes * 60 + seconds;
-    }
+    const playlistId = channel.items[0].contentDetails.relatedPlaylists.uploads;
+    const playlist = await fetchJson(`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails,snippet&playlistId=${playlistId}&key=${apiKey}&maxResults=50`);
+    const items = (playlist.items || []).filter(item => item.snippet && item.snippet.title !== "Deleted video" && item.snippet.title !== "Private video");
+    const ids = items.map(item => item.contentDetails.videoId);
+    if (!ids.length) return [];
 
-    async function fetchVideoDurations(videoIds, apiKey) {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoIds.join(',')}&key=${apiKey}`);
-        const data = await response.json();
-        
-
-        // return map of id -> duration in seconds
-        const map = data.items.reduce((acc, item) => {
-            acc[item.id] = parseDurationStr(item.contentDetails.duration);
-            return acc;
-        }, {});
-        
-        
+    const details = await fetchJson(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${ids.join(",")}&key=${apiKey}`);
+    const durations = (details.items || []).reduce((map, item) => {
+        map[item.id] = durationInSeconds(item.contentDetails.duration);
         return map;
+    }, {});
+
+    return items.filter(item => durations[item.contentDetails.videoId] > 60).slice(0, 9);
+}
+
+function createVideoCard(video, index) {
+    const id = video.contentDetails.videoId;
+    const title = video.snippet.title;
+    const thumbnails = video.snippet.thumbnails || {};
+    const thumbnail = thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
+    const button = document.createElement("button");
+    button.className = index === 0 ? "video-card video-card--feature" : "video-card";
+    button.type = "button";
+    button.dataset.videoId = id;
+
+    const image = document.createElement("img");
+    image.src = thumbnail ? thumbnail.url : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    image.alt = "";
+    image.loading = "lazy";
+
+    const shade = document.createElement("span");
+    shade.className = "video-card__shade";
+    const play = document.createElement("span");
+    play.className = "video-card__play";
+    play.setAttribute("aria-hidden", "true");
+    play.textContent = "▶";
+    const text = document.createElement("span");
+    text.className = "video-card__text";
+    const strong = document.createElement("strong");
+    strong.textContent = title;
+    const small = document.createElement("small");
+    small.textContent = "Chasing Poppies · YouTube";
+    text.append(strong, small);
+    button.append(image, shade, play, text);
+    return button;
+}
+
+export async function loadVideos() {
+    const container = document.getElementById("video-container");
+    if (!container || !apiKey) return;
+
+    try {
+        const videos = await getLatestVideos();
+        if (videos.length) container.replaceChildren(...videos.map(createVideoCard));
+    } catch (error) {
+        // The curated HTML cards remain available when YouTube is unavailable.
     }
-
-    async function fetchVideoList(playlistId, apiKey) {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails,snippet&playlistId=${playlistId}&key=${apiKey}&maxResults=50`);
-        const data = await response.json();
-        
-        // Initial filter to remove absolute garbage without descriptions
-        data.items = data.items.filter(item => item.snippet.description);
-        
-        // Extract IDs for fetching actual duration
-        const videoIds = data.items.map(item => item.contentDetails.videoId);
-        
-        // Get durations in a single batch call
-        const durationsMap = await fetchVideoDurations(videoIds, apiKey);
-
-        // Filter out videos that are 60 seconds or shorter (YouTube Shorts)
-        const regularVideos = data.items.filter(item => {
-            const videoId = item.contentDetails.videoId;
-            const durationInSeconds = durationsMap[videoId];
-            return durationInSeconds > 60;
-        });
-
-        
-        // Ensure we only ever return exactly 12 items for the UI
-        return regularVideos.slice(0, 12);
-    }
-
-    // Call the function to embed videos
-    embedChannelVideos(); 
-};
-
-// add a function that hides the img and i elements when the mouse hovers over divs with a class of "video-item"
-export const playVideo = () => {
-    document.body.addEventListener("mouseover", e => {
-        if (e.target.closest(".video-item")) {
-            e.target.closest(".video-item").classList.add("hovered");
-        }
-    });
-};
+}

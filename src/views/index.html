@@ -1,348 +1,194 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
+<!doctype html>
+<html lang="en">
 <head>
-  <title>Chasing Poppies</title>
+  <title>Chasing Poppies | Phoenix Heavy Rock Band</title>
   <module href="/components/head.html"></module>
 </head>
-
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <nav id="social" class="social nav">
-    <ul>
-      <li>
-        <a href="https://www.instagram.com/chasingpoppiesband/" title="Follow Chasing Poppies on Instagram!"
-          target="_blank">
-          <i class="fab fa-instagram"></i>
-        </a>
-      </li>
-      <li>
-        <a href="https://www.facebook.com/chasingpoppiesband" title="Follow Chasing Poppies on Facebook!"
-          target="_blank">
-          <i class="fab fa-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a href="https://www.youtube.com/channel/UCwXXkWcM7_O1M5U2is5q18g" title="Follow Chasing Poppies on YouTube!"
-          target="_blank">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </li>
-      <li>
-        <a href="https://www.tiktok.com/@chasing.poppies" title="Follow Chasing Poppies on TikTok!"
-          target="_blank">
-          <i class="fab fa-tiktok"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Chasing Poppies home">
+      <img src="/images/skull-poppies-96.webp" width="96" height="93" alt="">
+      <span>Chasing Poppies</span>
+    </a>
 
-  <section id="masthead" class="masthead pane">
-    <img src="/images/skull-poppies.png" alt="Chasing Poppies" />
-    <h1>Chasing Poppies</h1>
-  </section>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-toggle__line"></span>
+      <span class="menu-toggle__line"></span>
+      <span class="sr-only">Open menu</span>
+    </button>
 
-  <a class="upload-link btn" href="https://www.dropbox.com/request/bUq3f6j59fpyh2v8fpfG" target="_blank">Upload show videos here!</a>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="#shows">Shows</a>
+      <a href="#videos">Videos</a>
+      <a href="#about">About</a>
+      <a class="nav-booking" href="#booking">Booking</a>
+    </nav>
+  </header>
 
-  <section id="events" class="events pane">
-    <h2>Events</h2>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <h1 class="sr-only" id="hero-title">Chasing Poppies</h1>
+      <div class="hero__noise" aria-hidden="true"></div>
 
-    <p>Stay tuned for upcoming shows!</p>
-
-    <!-- Starlite -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2024-1-6T9:00">Friday, January 26th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies with Foovana</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/84vmnSXHKRV5BHbRA" target="_blank">Starlite Lounge</a></span>
+      <div class="hero__art" aria-hidden="true">
+        <div class="hero__poster">
+          <img src="/images/chasing-poppies-hero.webp" srcset="/images/chasing-poppies-hero-720.webp 720w, /images/chasing-poppies-hero.webp 1200w" sizes="(max-width: 720px) calc(100vw - 34px), 760px" width="1200" height="1234" fetchpriority="high" alt="">
+        </div>
       </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">4346 W. Olive Ave. </span>
-        <span itemprop="addressLocality">Glendale</span>, <span itemprop="addressRegion">AZ</span> <span
-          itemprop="postalCode">85028</span>
-      </div>
-      <span class="event-time">9:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="10.00">$10.00</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <a href="https://fb.me/e/1BBfPurUJ" class="flyer" target="_blank" title="Chasing Poppies at Starlite Lounge 1/26/24">
-        <img src="/images/20240126-starlite.jpeg" alt="Chasing Poppies at Starlite Lounge 1/26/24" />
+
+      <a class="share-video share-video--desktop" href="https://www.dropbox.com/request/bUq3f6j59fpyh2v8fpfG" target="_blank" rel="noopener noreferrer">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+          <path d="M12 16V3m0 0L7 8m5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>
+        </svg>
+        <span>Upload your show videos here</span>
       </a>
+
+      <a class="share-video share-video--mobile" href="https://www.dropbox.com/request/bUq3f6j59fpyh2v8fpfG" target="_blank" rel="noopener noreferrer">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+          <path d="M12 16V3m0 0L7 8m5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>
+        </svg>
+        <span>Upload your show videos here</span>
+      </a>
+    </section>
+
+    <section class="section shows" id="shows" aria-labelledby="shows-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="shows-title">Live &amp; loud</h2>
+        </div>
+      </div>
+
+      <div class="show-list">
+        <module href="/components/generated/events.html"></module>
+      </div>
+    </section>
+
+    <section class="section videos" id="videos" aria-labelledby="videos-title">
+      <div class="section-heading section-heading--compact">
+        <div>
+          <p class="eyebrow">From the stage</p>
+          <h2 id="videos-title">Watch</h2>
+        </div>
+        <a class="text-link" href="https://www.youtube.com/channel/UCwXXkWcM7_O1M5U2is5q18g" target="_blank" rel="noopener noreferrer">All videos on YouTube <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="video-grid" id="video-container">
+        <button class="video-card video-card--feature" type="button" data-video-id="OhcV0DT2D9k">
+          <img src="/images/video-when-god-comes-back.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span>
+          <span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>When God Comes Back</strong><small>All Them Witches cover</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="kgdNoJhEDIg">
+          <img src="/images/video-little-monster.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>Little Monster</strong><small>Royal Blood cover</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="vfrEewbKZ2U">
+          <img src="/images/video-sober.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>Sober</strong><small>Tool cover · Phoenix</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="iunpBV2ZDsE">
+          <img src="/images/video-chop-suey.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>Chop Suey</strong><small>System of a Down cover</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="2bXx_F3si0I">
+          <img src="/images/video-smooth-sailing.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>Smooth Sailing</strong><small>Queens of the Stone Age cover</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="1WlrExiNeaY">
+          <img src="/images/video-testify.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>Testify</strong><small>Rage Against the Machine cover</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="hiFsYPDR394">
+          <img src="/images/video-how-the-gods-kill.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>How the Gods Kill</strong><small>Danzig cover</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="ylB09gud1oA">
+          <img src="/images/video-live-blooze.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>Live at The Blooze</strong><small>When God Comes Back</small></span>
+        </button>
+        <button class="video-card" type="button" data-video-id="3fb9Yb1dRxo">
+          <img src="/images/video-little-monster-live.jpg" alt="" loading="lazy">
+          <span class="video-card__shade"></span><span class="video-card__play" aria-hidden="true">▶</span>
+          <span class="video-card__text"><strong>Live at The Blooze</strong><small>Little Monster</small></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="about__feature">
+        <figure class="about__photo">
+          <img
+            src="/images/about-band-1200.webp"
+            srcset="/images/about-band-1200.webp 1200w, /images/about-band-2400.webp 2400w"
+            sizes="(max-width: 720px) calc(100vw - 32px), 680px"
+            width="1200"
+            height="800"
+            loading="lazy"
+            alt="Chasing Poppies band members seated beneath a bright projection screen."
+          >
+          <figcaption>Photo · Jim Louvau</figcaption>
+        </figure>
+        <div class="about__story">
+          <p class="eyebrow">The band · Phoenix, Arizona</p>
+          <h2 id="about-title">Heavy vibes,<br>far and wide.</h2>
+          <p>Covering heroin rock of the ’90s, desert rock of the ’00s, and a variety of rock we love, all of which inspires our original music. Our mission: share these heavy vibes with audiences far and wide! <span aria-label="skull, wilted rose, rock on">💀🥀🤘</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking" id="booking" aria-labelledby="booking-title">
+      <div class="booking__art" aria-hidden="true">
+        <img src="/images/chasing-poppies-hero.webp" srcset="/images/chasing-poppies-hero-720.webp 720w, /images/chasing-poppies-hero.webp 1200w" sizes="(max-width: 720px) 440px, 610px" width="1200" height="1234" loading="lazy" alt="">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="booking__layout">
+        <div class="booking__headline">
+          <p class="eyebrow">Bring the noise · Live bookings</p>
+          <h2 id="booking-title">Book<br>Chasing<br>Poppies</h2>
+        </div>
+        <div class="booking__classified">
+          <p class="booking__kicker">Wanted: loud rooms + good people</p>
+          <p>Venues, promoters, and heavy-music people—let’s put a show together.</p>
+          <div class="booking__contacts">
+            <a class="booking__email" href="mailto:booking@chasingpoppies.com">booking@chasingpoppies.com</a>
+            <a class="booking__phone" href="tel:6026869346">(602) 686-9346</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand brand--footer" href="#top">
+      <img src="/images/skull-poppies-96.webp" width="96" height="93" alt="">
+      <span>Chasing Poppies</span>
+    </a>
+    <div class="social-links" aria-label="Social media">
+      <a href="https://www.instagram.com/chasingpoppiesband/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.facebook.com/chasingpoppiesband" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a href="https://www.youtube.com/channel/UCwXXkWcM7_O1M5U2is5q18g" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://www.tiktok.com/@chasing.poppies" target="_blank" rel="noopener noreferrer">TikTok</a>
     </div>
+    <p>© 2026 Chasing Poppies · Phoenix, Arizona</p>
+  </footer>
 
-    <hr/> -->
-
-    <!-- Hoopers -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2024-1-6T8:00">Saturday, March 23rd</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/sCAEQM5Nmiv9CocZ8" target="_blank">Hoopers</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">5114 W. Northern Ave</span>
-        <span itemprop="addressLocality">Glendale</span>, <span itemprop="addressRegion">AZ</span> <span
-          itemprop="postalCode">85301</span>
-      </div>
-      <span class="event-time">8:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="0.00">No cover</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <a href="https://fb.me/e/6tVDuDqiQ" class="flyer" target="_blank" title="Chasing Poppies at Hoopers 3/23/24">
-        <img src="/images/20240323-hoopers.jpeg" alt="Chasing Poppies at Hoopers 3/23/24" />
-      </a>
+  <dialog class="video-dialog" aria-labelledby="video-dialog-title">
+    <div class="video-dialog__bar">
+      <h2 id="video-dialog-title">Chasing Poppies live</h2>
+      <button class="video-dialog__close" type="button" aria-label="Close video">×</button>
     </div>
-
-    <br/>
-    <hr/> -->
-
-    <!-- Harley Davidson -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2025-4-4T3:00">Friday, April 4th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/ZncJrBoGANLAd5DbA" target="_blank">Harley Davidson, Scottsdale</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">15656 Hayden Rd.</span>
-        <span itemprop="addressLocality">Scottsdale</span>, <span itemprop="addressRegion">AZ</span> <span
-          itemprop="postalCode">85260</span>
-      </div>
-      <span class="event-time">3:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="0.00">No cover</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <a href="https://www.facebook.com/share/15idJf2WaK/" class="flyer" target="_blank" title="Chasing Poppies at Harley Davidson Scottsdale 4/04/25">
-        <img src="/images/20250404-harley.png" alt="Chasing Poppies at Harley Davidson Scottsdale 4/04/25" />
-      </a>
-    </div>
-
-    <br/>
-    <hr/> -->
-
-    <!-- Bike Week -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2025-4-6T1:30">Sunday, April 6th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/W7ATeAvaf2CraXfJA" target="_blank">Arizona Bike Week at the Handlebar Saloon</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">16601 North Pima Road</span>
-        <span itemprop="addressLocality">Scottsdale</span>, <span itemprop="addressRegion">AZ</span> <span
-          itemprop="postalCode">85260</span>
-      </div>
-      <span class="event-time">1:30 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="0.00">Sunday is Free Admission!</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <a href="https://www.facebook.com/share/1A3j8LeEKx/" class="flyer" target="_blank" title="Chasing Poppies at Arizona Bike Week 4/06/25">
-        <img src="/images/20250406-bike-week.png" alt="Chasing Poppies at Arizona Bike Week 4/06/25" />
-      </a>
-    </div>
-
-    <br/>
-    <hr/> -->
-
-    <!-- Backstage Bar and Billiards -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2025-4-18T7:00">Friday, April 18th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/SoExmqKsTYHdDFHf8" target="_blank">Backstage Bar and Billiards in Las Vegas</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">601 E Fremont St</span>
-        <span itemprop="addressLocality">Las Vegas</span>, <span itemprop="addressRegion">NV</span> <span
-          itemprop="postalCode">89101</span>
-      </div>
-      <span class="event-time">7:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="20.00">$20</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <a href="https://www.facebook.com/share/168abcbKCK/" class="flyer" target="_blank" title="Chasing Poppies at Backstage Bar and Billiards 4/18/25">
-        <img src="/images/20250418-backstage.jpg" alt="Chasing Poppies at Backstage Bar and Billiards 4/18/25" />
-      </a>
-    </div>
-
-    <br/>
-    <hr/> -->
-
-    <!-- Blooze -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2025-6-7T7:00">Saturday, June 7th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">King Cherry EP Release featuring Chasing Poppies and Teskey</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/C4gCFjKfw4UeNWWq9" target="_blank">The Blooze</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">12014 N 32nd St. </span>
-        <span itemprop="addressLocality">Phoenix</span>, <span itemprop="addressRegion">AZ</span> <span itemprop="postalCode">85028</span>
-      </div>
-      <span class="event-time">7:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="10.00">$10.00</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <a href="https://www.facebook.com/share/1AYSxTKX4E/" class="flyer" target="_blank" title="Chasing Poppies and Arizona 90s Band at The Blooze 2/8/25">
-        <img src="/images/20250607-blooze.png" alt="King Cherry EP Release featuring Chasing Poppies and Teskey" />
-      </a>
-    </div>
-
-    <br/>
-    <hr/> -->
-
-    <!-- Cactus Jack's -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2025-8-15T8:00">Friday, August 15th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies with Arizona's 90s Band</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/9CZgME4uTbLqr1wG9" target="_blank">Cactus Jack's</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">4747 E Elliot Rd </span>
-        <span itemprop="addressLocality">Phoenix</span>, <span itemprop="addressRegion">AZ</span> <span
-          itemprop="postalCode">85044</span>
-      </div>
-      <span class="event-time">8:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="10.00">$10.00</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <div>
-        <a class="btn mt-3" href="https://www.eventbrite.com/e/chasing-poppies-with-feratu-live-at-cactus-jacks-tickets-918014936387?aff=oddtdtcreator" target="_blank">Buy tickets here!</a>
-      </div>
-      <a href="https://www.facebook.com/share/1HXm7UJr2G/" class="flyer" target="_blank" title="Chasing Poppies at Cactus Jack's 7/13/24">
-        <img src="/images/20250815-standard-flyer.png" alt="Chasing Poppies and Arizona's 90s Band at Cactus Jack's" />
-      </a>
-    </div>
-
-    <br/>
-    <hr/> -->
-
-    <!-- Boondocks -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event" id="gilby">
-      <h3 class="event-date" itemprop="startDate" content="2024-08-09T10:00">Friday, August 9th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/Vr74DEAHHab5Mvhj6" target="_blank">Boondocks</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">1024 E Broadway Rd </span>
-        <span itemprop="addressLocality">Tempe</span>, <span itemprop="addressRegion">AZ</span> <span itemprop="postalCode">85282</span>
-      </div>
-      <span class="event-time">10:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="0.00">No Cover</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <a href="https://www.facebook.com/share/696j4Mjf3J4Ayc6k/" class="flyer" target="_blank" title="Chasing Poppies at Boondocks 8/09/24">
-        <img src="/images/20240809-boondocks.png" alt="Chasing Poppies at Boondocks 8/09/24" />
-      </a>
-    </div>
-
-    <br/>
-    <hr/> -->
-
-    <!-- 44 -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event" id="gilby">
-      <h3 class="event-date" itemprop="startDate" content="2024-6-20T6:00">Saturday, August 31st</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/k9WboZnDmV489Cct9" target="_blank">The 44</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">4494 W Peoria Ave </span>
-        <span itemprop="addressLocality">Glendale</span>, <span itemprop="addressRegion">AZ</span> <span itemprop="postalCode">85302</span>
-      </div>
-      <span class="event-time">8:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="0.00">FREE</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <span>| ALL AGES</span>
-      <a href="https://www.facebook.com/share/GqZSTQue19Jq6zrt/" class="flyer" target="_blank" title="Chasing Poppies at The 44 8/31/24">
-        <img src="/images/20240831-44.png" alt="Chasing Poppies at The 44 8/31/24" />
-      </a>
-    </div> -->
-
-    <!-- <br/>
-    <hr/> -->
-
-    <!-- Pub Rock Live -->
-    <!-- <div class="event-wrapper" itemscope itemtype="https://schema.org/Event">
-      <h3 class="event-date" itemprop="startDate" content="2024-1-6T8:00">Saturday, October 19th</h3>
-      <div class="event-name" itemprop="name">
-        <span class="event-title" itemprop="performer">Chasing Poppies with Hyer Tide</span>
-        <span class="event-venue"> live at <a itemprop="name" href="https://maps.app.goo.gl/JSNmHCGyby7gPTEy9" target="_blank">Pub Rock Live</a></span>
-      </div>
-      <div class="address sr-only" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">8005 E Roosevelt St</span>
-        <span itemprop="addressLocality">Scottsdale</span>, <span itemprop="addressRegion">AZ</span> <span
-          itemprop="postalCode">85257</span>
-      </div>
-      <span class="event-time">7:00 PM</span> |
-      <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-        <span class="event-price" itemprop="price" content="15.00">$10 in advance $15 at the door</span>
-        <meta itemprop="priceCurrency" content="USD">
-      </span>
-      <div>
-        <a class="btn mt-3" href="https://www.etix.com/ticket/p/96207185/hyer-tide-scottsdale-pub-rock-live" target="_blank">Buy tickets here!</a>
-      </div>
-      <a href="https://www.facebook.com/share/19HiZry69i/" class="flyer" target="_blank" title="Chasing Poppies with Hyer Tide at Pub Rock Live 10/19/24">
-        <img src="/images/20241019-pubrock.jpeg" alt="Chasing Poppies with Hyer Tide at Pub Rock Live 10/19/24" />
-      </a>
-    </div> -->
-    
-  </section>
-
-  <!-- <section id="merch" class="merch pane">
-    <h2>Merch</h2>
-    <p>Get your Chasing Poppies merch: Stickers, shirts, and more!</p>
-    <p>Click the image below to shop!</p>
-
-    <div class="merch-wrapper">
-      <a href="https://www.stickermule.com/chasingpoppies" target="_blank">
-        <img src="/images/jameson-t.png" alt="Chasing Poppies Merch" />
-      </a>
-    </div>
-  </section>
-
-  <hr/> -->
-
-  <section id="videos" class="videos pane">
-    <h2>Videos</h2>
-
-    <!-- sociablekit embed (https://www.sociablekit.com/app/users/widgets/update_embed/120132#basic)-->
-    <!-- <div class='sk-ww-youtube-channel-videos' data-embed-id='120132'></div><script src='https://widgets.sociablekit.com/youtube-channel-videos/widget.js' async defer></script> -->
-
-    <div id="video-container"></div>
-
-    <p class="mt-5">Find more videos on our <a href="https://www.youtube.com/channel/UCwXXkWcM7_O1M5U2is5q18g" target="_blank">YouTube Channel</a>!</p>
-    
-  </section>
-
-  <section class="footer text-center p-3">
-    <hr/>
-    <p>Booking: <a href="mailto:booking@chasingpoppies.com">booking@chasingpoppies.com</a> / <a href="tel:6026869346">(602) 686-9346</a></p>
-  </section>
-
-  <script src="bundle.js" defer async></script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT2NETM24J"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-NT2NETM24J');
-    </script>
+    <div class="video-dialog__player" data-video-player></div>
+  </dialog>
+  <script src="/bundle.js" defer></script>
 </body>
-
 </html>

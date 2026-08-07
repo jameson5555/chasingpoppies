@@ -10,6 +10,7 @@
   },
   "scripts": {
     "clean": "rimraf dist/*",
+    "build:events": "node scripts/generate-site.js source",
     "css:autoprefixer": "postcss -u autoprefixer -r dist/*.css",
     "css:scss": "sass --no-source-map --style=compressed --load-path=node_modules src/scss:dist",
     "css:lint": "stylelint src/scss/*.scss --custom-syntax postcss-scss",
@@ -18,7 +19,8 @@
     "build:html": "posthtml -c posthtml.json",
     "build:images": "mkdir -p dist/images && cp -R src/images/* dist/images/ || true",
     "build:fonts": "mkdir -p dist/fonts && cp -R src/fonts/* dist/fonts/ || true",
-    "build": "run-s build:css build:js build:html build:images build:fonts",
+    "build:pages": "node scripts/generate-site.js dist",
+    "build": "run-s clean build:events build:css build:js build:html build:images build:fonts build:pages",
     "serve": "http-server dist -p 3000",
     "watch:css": "onchange \"src/scss\" -- npm run build:css",
     "watch:html": "onchange \"src/views\" -- npm run build:html",

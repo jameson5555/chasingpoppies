@@ -1,5 +1,11 @@
 # Chasing Poppies Website
 
+## Content updates
+
+- Edit `src/data/events.json` to add or update shows. The build validates the data, renders homepage cards, and creates one page per show at `/shows/{slug}/`.
+- The homepage includes nine curated video cards as a reliable fallback. Production builds with `YOUTUBE_API_KEY` replace them with the latest nine channel uploads longer than 60 seconds.
+- Run `npm run build` before previewing or deploying. Generated metadata includes canonical URLs, `MusicGroup` and per-show `Event` JSON-LD, `sitemap.xml`, and `robots.txt`.
+
 ## FTP Deploy
 - git-ftp docs: https://github.com/git-ftp/git-ftp
 

@@ -306,6 +306,7 @@ button {
   box-shadow: 0 24px 0 rgba(159, 8, 8, 0.58), 0 48px 0 rgba(159, 8, 8, 0.28);
   content: "";
   pointer-events: none;
+  opacity: 0.5;
 }
 
 .hero__noise {
@@ -410,7 +411,7 @@ button {
   place-items: center;
   background-color: #0b0b0b;
   background-image:
-    linear-gradient(112deg, transparent 0 32%, rgba(114, 6, 8, 0.82) 32% 34%, transparent 34% 76%, rgba(190, 190, 190, 0.12) 76% 78%, transparent 78%),
+    linear-gradient(112deg, transparent 0 32%, rgba(114, 6, 8, 0.5) 32% 34%, transparent 34% 76%, rgba(190, 190, 190, 0.12) 76% 78%, transparent 78%),
     radial-gradient(circle, rgba(236, 234, 229, 0.12) 0 1px, transparent 1.5px);
   background-size: auto, 14px 14px;
 }
@@ -980,7 +981,7 @@ button {
   width: 330px;
   height: 18px;
   transform: rotate(-7deg);
-  background: rgba(236, 234, 229, 0.72);
+  background: rgba(236, 234, 229, 0.3);
 }
 
 .booking__art span:nth-of-type(2) {

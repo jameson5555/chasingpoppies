@@ -84,5 +84,33 @@
     "thumbnailHeight": 828,
     "mapUrl": "https://maps.app.goo.gl/C4gCFjKfw4UeNWWq9",
     "eventUrl": "https://www.facebook.com/share/1AYSxTKX4E/"
+  },
+  {
+    "slug": "return-of-chasing-poppies-2026",
+    "name": "The Return of Chasing Poppies",
+    "dateLabel": "November 21, 2026",
+    "month": "Nov",
+    "day": "21",
+    "year": "2026",
+    "timeLabel": "Saturday · 8:00 PM",
+    "startDate": "2026-11-21T20:00:00-07:00",
+    "venue": "The Blooze",
+    "city": "Phoenix",
+    "state": "AZ",
+    "streetAddress": "12014 N 32nd Street",
+    "postalCode": "85028",
+    "description": "Chasing Poppies returns to The Blooze with Arizona's 90's Band and special guests.",
+    "admission": "$10 cover",
+    "price": 10,
+    "age": "Special guests",
+    "flyer": "/images/20261121-blooze.webp",
+    "flyerWidth": 1275,
+    "flyerHeight": 1650,
+    "flyerAlt": "The Return of Chasing Poppies at The Blooze show flyer",
+    "thumbnail": "/images/20261121-blooze-thumb.webp",
+    "thumbnailWidth": 640,
+    "thumbnailHeight": 829,
+    "mapUrl": "https://maps.app.goo.gl/C4gCFjKfw4UeNWWq9",
+    "eventUrl": "https://www.facebook.com/share/1QoH6M3oFs/"
   }
 ]

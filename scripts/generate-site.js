@@ -47,6 +47,10 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
+function isArchived(event) {
+  return new Date(event.startDate).getTime() < Date.now();
+}
+
 function eventJsonLd(event) {
   const data = {
     "@context": "https://schema.org",
@@ -93,7 +97,7 @@ function card(event) {
   </div>
   <div class="show-card__body">
     <div class="show-card__meta">
-      <span class="stamp">Archive</span>
+      <span class="stamp">Upcoming</span>
       <span>${escapeHtml(event.timeLabel)}</span>
     </div>
     <h3><a href="/shows/${event.slug}/">${escapeHtml(event.name)}</a></h3>
@@ -105,6 +109,7 @@ function card(event) {
     </div>
     <div class="show-card__actions">
       <a href="/shows/${event.slug}/">Show details</a>
+      <a href="${escapeHtml(event.eventUrl)}" target="_blank" rel="noopener noreferrer">Event page <span aria-hidden="true">↗</span></a>
       <a href="${escapeHtml(event.mapUrl)}" target="_blank" rel="noopener noreferrer">Venue map <span aria-hidden="true">↗</span></a>
     </div>
   </div>
@@ -115,7 +120,10 @@ function card(event) {
 }
 
 function generateSource() {
-  const output = `${events.map(card).join("\n")}\n`;
+  const upcomingEvents = events
+    .filter(event => !isArchived(event))
+    .sort((a, b) => Date.parse(a.startDate) - Date.parse(b.startDate));
+  const output = `${upcomingEvents.map(card).join("\n")}\n`;
   const target = path.join(root, "src/views/components/generated/events.html");
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, output);
@@ -162,7 +170,7 @@ function detailPage(event) {
     <article class="show-detail__layout">
       <div class="show-detail__copy">
         <a class="text-link" href="/#shows">← Back to shows</a>
-        <p class="eyebrow">Archive · ${escapeHtml(event.dateLabel)}</p>
+        <p class="eyebrow">${isArchived(event) ? "Archive" : "Upcoming"} · ${escapeHtml(event.dateLabel)}</p>
         <h1>${escapeHtml(event.name)}</h1>
         <p class="show-detail__venue">${escapeHtml(venueLabel)} · ${escapeHtml(event.city)}, ${escapeHtml(event.state)}</p>
         <p class="show-detail__description">${escapeHtml(event.description)}</p>
@@ -173,8 +181,9 @@ function detailPage(event) {
           <div><dt>Details</dt><dd>${escapeHtml(event.age)}</dd></div>
         </dl>
         <div class="show-detail__actions">
-          <a class="button button--primary" href="${escapeHtml(event.mapUrl)}" target="_blank" rel="noopener noreferrer">Venue map ↗</a>
-          <a class="button button--ghost" href="${escapeHtml(event.flyer)}" target="_blank">Open flyer ↗</a>
+          <a class="button button--primary" href="${escapeHtml(event.eventUrl)}" target="_blank" rel="noopener noreferrer">Event page ↗</a>
+          <a class="button button--ghost" href="${escapeHtml(event.mapUrl)}" target="_blank" rel="noopener noreferrer">Venue map ↗</a>
+          <a class="button button--ghost" href="${escapeHtml(event.flyer)}" target="_blank" rel="noopener noreferrer">Open flyer ↗</a>
         </div>
       </div>
       <figure class="show-detail__flyer"><img src="${escapeHtml(event.flyer)}" width="${event.flyerWidth}" height="${event.flyerHeight}" alt="${escapeHtml(event.flyerAlt)}"></figure>

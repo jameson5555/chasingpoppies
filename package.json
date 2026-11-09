@@ -20,6 +20,7 @@
     "build:images": "mkdir -p dist/images && cp -R src/images/* dist/images/ || true",
     "build:fonts": "mkdir -p dist/fonts && cp -R src/fonts/* dist/fonts/ || true",
     "build:pages": "node scripts/generate-site.js dist",
+    "test": "node --test scripts/generate-site.test.js",
     "build": "run-s clean build:events build:css build:js build:html build:images build:fonts build:pages",
     "serve": "http-server dist -p 3000",
     "watch:css": "onchange \"src/scss\" -- npm run build:css",

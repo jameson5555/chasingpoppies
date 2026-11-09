@@ -12,10 +12,10 @@ const required = [
   "mapUrl", "eventUrl"
 ];
 
-function validate() {
+function validate(eventList = events) {
   const slugs = new Set();
 
-  events.forEach((event, index) => {
+  eventList.forEach((event, index) => {
     required.forEach(key => {
       if (event[key] === undefined || event[key] === null || event[key] === "") {
         throw new Error(`Event ${index + 1} is missing ${key}`);
@@ -28,14 +28,50 @@ function validate() {
     if (slugs.has(event.slug)) {
       throw new Error(`Duplicate event slug: ${event.slug}`);
     }
-    if (Number.isNaN(Date.parse(event.startDate))) {
-      throw new Error(`Invalid startDate for ${event.slug}`);
+    validateDate(event.startDate, "startDate", event.slug);
+    if (event.endDate !== undefined) {
+      validateDate(event.endDate, "endDate", event.slug);
+      if (Date.parse(event.endDate) <= Date.parse(event.startDate)) {
+        throw new Error(`endDate must be after startDate for ${event.slug}`);
+      }
     }
+    if (event.endTimeApproximate !== undefined &&
+        (typeof event.endTimeApproximate !== "boolean" || !event.endDate)) {
+      throw new Error(`endTimeApproximate requires an endDate and a boolean for ${event.slug}`);
+    }
+    if (typeof event.price !== "number" || !Number.isFinite(event.price) || event.price < 0) {
+      throw new Error(`Invalid admission price for ${event.slug}`);
+    }
+    if (event.organizer !== undefined) {
+      if (!event.organizer || typeof event.organizer.name !== "string" || !event.organizer.name.trim()) {
+        throw new Error(`Organizer must have a name for ${event.slug}`);
+      }
+      if (event.organizer.url !== undefined) validateUrl(event.organizer.url, event.slug);
+    }
+    if (event.ticketUrl !== undefined) validateUrl(event.ticketUrl, event.slug);
     if (!event.flyer.startsWith("/images/")) {
       throw new Error(`Flyer must be in /images for ${event.slug}`);
     }
     slugs.add(event.slug);
   });
+}
+
+function validateDate(value, field, slug) {
+  // A known show time must include its local UTC offset; never guess midnight.
+  const match = typeof value === "string" && value.match(/^(\d{4}-\d{2}-\d{2})T((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d)(Z|[+-]\d{2}:\d{2})$/);
+  if (!match || Number.isNaN(Date.parse(value)) ||
+      new Date(`${match[1]}T00:00:00Z`).toISOString().slice(0, 10) !== match[1]) {
+    throw new Error(`Invalid ${field} (use ISO 8601 with a timezone) for ${slug}`);
+  }
+}
+
+function validateUrl(value, slug) {
+  try {
+    const url = new URL(value);
+    if (!["https:", "http:"].includes(url.protocol)) throw new Error("Invalid protocol");
+  } catch (error) {
+    throw new Error(`Invalid organizer or ticket URL for ${slug}`);
+  }
 }
 
 function escapeHtml(value) {
@@ -47,14 +83,22 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
-function isArchived(event) {
-  return new Date(event.startDate).getTime() < Date.now();
+function isArchived(event, now = Date.now()) {
+  // Keep an ongoing show listed until its confirmed end, or the end of its local day.
+  const end = event.endDate || `${event.startDate.slice(0, 10)}T23:59:59${event.startDate.slice(19)}`;
+  return Date.parse(end) < now;
+}
+
+function localTime(value) {
+  // Read the supplied local time, independent of the build server's timezone.
+  const hour = Number(value.slice(11, 13));
+  return `${hour % 12 || 12}:${value.slice(14, 16)} ${hour < 12 ? "AM" : "PM"}`;
 }
 
 function eventJsonLd(event) {
   const data = {
     "@context": "https://schema.org",
-    "@type": "Event",
+    "@type": "MusicEvent",
     "@id": `https://chasingpoppies.com/shows/${event.slug}/#event`,
     name: event.name,
     description: event.description,
@@ -79,10 +123,23 @@ function eventJsonLd(event) {
       "@id": "https://chasingpoppies.com/#band",
       name: "Chasing Poppies"
     },
+    isAccessibleForFree: event.price === 0,
+    offers: {
+      "@type": "Offer",
+      name: event.admission,
+      price: event.price,
+      priceCurrency: "USD"
+    },
     url: `https://chasingpoppies.com/shows/${event.slug}/`
   };
 
   if (event.endDate) data.endDate = event.endDate;
+  if (event.organizer) {
+    data.organizer = { "@type": "Organization", name: event.organizer.name };
+    if (event.organizer.url) data.organizer.url = event.organizer.url;
+  }
+  // Event-info links aren't necessarily ticket purchase pages.
+  if (event.ticketUrl) data.offers.url = event.ticketUrl;
   return data;
 }
 
@@ -132,6 +189,9 @@ function generateSource() {
 function detailPage(event) {
   const canonical = `https://chasingpoppies.com/shows/${event.slug}/`;
   const venueLabel = event.venueLabel || event.venue;
+  const eventTitle = event.name.includes("Chasing Poppies") ? event.name : `${event.name} — Chasing Poppies`;
+  const title = `${eventTitle} | ${venueLabel} | ${event.dateLabel}`;
+  const description = `Chasing Poppies at ${event.venue} in ${event.city}, ${event.state}, ${event.dateLabel}. ${event.timeLabel.replace(/^.*? · /, "")}. ${event.admission}. ${event.age}.`;
   const structuredData = JSON.stringify(eventJsonLd(event)).replace(/</g, "\\u003c");
   return `<!doctype html>
 <html lang="en">
@@ -139,20 +199,26 @@ function detailPage(event) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080808">
-  <title>${escapeHtml(event.name)} — Chasing Poppies</title>
-  <meta name="description" content="${escapeHtml(event.description)}">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${canonical}">
   <link rel="icon" type="image/png" href="/images/skull-poppies.png">
   <link rel="stylesheet" href="/index.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Chasing Poppies">
-  <meta property="og:title" content="${escapeHtml(event.name)} — Chasing Poppies">
-  <meta property="og:description" content="${escapeHtml(event.description)}">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}">
   <meta property="og:image" content="https://chasingpoppies.com${escapeHtml(event.flyer)}">
   <meta property="og:image:alt" content="${escapeHtml(event.flyerAlt)}">
+  <meta property="og:image:width" content="${event.flyerWidth}">
+  <meta property="og:image:height" content="${event.flyerHeight}">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="https://chasingpoppies.com${escapeHtml(event.flyer)}">
+  <meta name="twitter:image:alt" content="${escapeHtml(event.flyerAlt)}">
   <script type="application/ld+json">${structuredData}</script>
 </head>
 <body>
@@ -177,11 +243,16 @@ function detailPage(event) {
         <dl class="show-detail__facts">
           <div><dt>Date</dt><dd>${escapeHtml(event.dateLabel)}</dd></div>
           <div><dt>Time</dt><dd>${escapeHtml(event.timeLabel.replace(/^.*? · /, ""))}</dd></div>
+          ${event.endDate ? `<div><dt>Ends</dt><dd>${event.endTimeApproximate ? "About " : ""}<time datetime="${escapeHtml(event.endDate)}">${escapeHtml(localTime(event.endDate))}${event.endDate.slice(0, 10) !== event.startDate.slice(0, 10) ? " (next day)" : ""}</time></dd></div>` : ""}
+          <div><dt>Venue</dt><dd>${escapeHtml(event.venue)}</dd></div>
+          <div><dt>Address</dt><dd>${escapeHtml(event.streetAddress)}, ${escapeHtml(event.city)}, ${escapeHtml(event.state)} ${escapeHtml(event.postalCode)}</dd></div>
           <div><dt>Admission</dt><dd>${escapeHtml(event.admission)}</dd></div>
           <div><dt>Details</dt><dd>${escapeHtml(event.age)}</dd></div>
+          ${event.organizer ? `<div><dt>Organizer</dt><dd>${event.organizer.url ? `<a href="${escapeHtml(event.organizer.url)}">${escapeHtml(event.organizer.name)}</a>` : escapeHtml(event.organizer.name)}</dd></div>` : ""}
         </dl>
         <div class="show-detail__actions">
           <a class="button button--primary" href="${escapeHtml(event.eventUrl)}" target="_blank" rel="noopener noreferrer">Event page ↗</a>
+          ${event.ticketUrl ? `<a class="button button--ghost" href="${escapeHtml(event.ticketUrl)}" target="_blank" rel="noopener noreferrer">Tickets ↗</a>` : ""}
           <a class="button button--ghost" href="${escapeHtml(event.mapUrl)}" target="_blank" rel="noopener noreferrer">Venue map ↗</a>
           <a class="button button--ghost" href="${escapeHtml(event.flyer)}" target="_blank" rel="noopener noreferrer">Open flyer ↗</a>
         </div>
@@ -233,8 +304,17 @@ function generateDist() {
 `);
 }
 
-validate();
-const mode = process.argv[2];
-if (mode === "source") generateSource();
-else if (mode === "dist") generateDist();
-else throw new Error("Usage: node scripts/generate-site.js <source|dist>");
+if (require.main === module) {
+  validate();
+  const mode = process.argv[2];
+  if (mode === "source") generateSource();
+  else if (mode === "dist") {
+    generateDist();
+    events.forEach(event => {
+      const missing = ["organizer", "endDate"].filter(field => !event[field]);
+      if (missing.length) console.warn(`SEO: ${event.slug} is missing recommended ${missing.join(", ")}; confirm these details before adding them.`);
+    });
+  } else throw new Error("Usage: node scripts/generate-site.js <source|dist>");
+}
+
+module.exports = { validate, isArchived, eventJsonLd, detailPage };

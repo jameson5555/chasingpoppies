@@ -1,6 +1,6 @@
 const assert = require("node:assert/strict");
 const { test } = require("node:test");
-const { validate, isArchived, eventJsonLd, detailPage } = require("./generate-site");
+const { validate, isArchived, eventJsonLd, detailPage, showsPage } = require("./generate-site");
 const events = require("../src/data/events.json");
 
 const paidShow = events.find(event => event.slug === "return-of-chasing-poppies-2026");
@@ -86,8 +86,42 @@ test("organizer text is escaped in HTML and cannot break the JSON-LD script", ()
   const event = { ...paidShow, organizer: { name: '</script><script>alert("x")</script>' } };
   const html = detailPage(event);
   const scripts = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];
-  assert.equal(scripts.length, 1);
+  assert.equal(scripts.length, 2);
   assert.equal(JSON.parse(scripts[0][1]).organizer.name, event.organizer.name);
   assert.ok(!html.includes(event.organizer.name));
   assert.ok(html.includes("&lt;/script&gt;&lt;script&gt;"));
+});
+
+test("shows index distinguishes upcoming dates from past shows and links to each event", () => {
+  const html = showsPage(Date.parse("2026-11-09T12:00:00-07:00"));
+  const data = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map(match => JSON.parse(match[1]));
+  assert.deepEqual(data.map(item => item["@type"]), ["CollectionPage", "BreadcrumbList"]);
+  assert.equal(data[0].mainEntity.numberOfItems, 2);
+  assert.deepEqual(data[0].mainEntity.itemListElement.map(item => item.url), [
+    "https://chasingpoppies.com/shows/return-of-chasing-poppies-2026/",
+    "https://chasingpoppies.com/shows/az-winter-bliss-local-showcase-2026/"
+  ]);
+  const past = html.slice(html.indexOf('<ul class="shows-archive">'));
+  assert.equal((past.match(/<li>/g) || []).length, 3);
+  assert.ok(!past.includes("return-of-chasing-poppies-2026"));
+  assert.ok(past.indexOf("king-cherry-ep-release-2025") < past.indexOf("arizona-bike-week-2025"));
+  for (const event of events) assert.ok(html.includes(`href="/shows/${event.slug}/"`));
+});
+
+test("shows index provides an honest empty state after the last event", () => {
+  const html = showsPage(Date.parse("2027-01-01T00:00:00-07:00"));
+  assert.ok(html.includes("No upcoming shows announced yet"));
+  assert.ok(!html.includes('<span class="stamp">Upcoming</span>'));
+  assert.equal((html.match(/<li>/g) || []).length, events.length);
+});
+
+test("event breadcrumbs match the visible hierarchy and preserve MusicEvent as the primary markup", () => {
+  const html = detailPage(paidShow);
+  const [event, breadcrumb] = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map(match => JSON.parse(match[1]));
+  assert.equal(event["@type"], "MusicEvent");
+  assert.equal(breadcrumb["@type"], "BreadcrumbList");
+  assert.deepEqual(breadcrumb.itemListElement.map(item => item.position), [1, 2, 3]);
+  assert.equal(breadcrumb.itemListElement[2].item, event.url);
+  assert.ok(html.includes('aria-label="Breadcrumb"><a href="/">Home</a>'));
+  assert.ok(html.includes('href="/shows/">Shows</a>'));
 });

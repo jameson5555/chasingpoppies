@@ -2,18 +2,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080808">
 <meta name="author" content="Chasing Poppies">
-<meta name="description" content="Chasing Poppies is a Phoenix heavy rock band covering heroin rock of the ’90s, desert rock of the ’00s, and writing original music inspired by both.">
-<meta name="robots" content="index, follow">
+<meta name="description" content="Chasing Poppies is a Phoenix heavy rock band playing covers and original music. Find upcoming shows, watch live videos, and get in touch for bookings.">
+<meta name="robots" content="index, follow, max-image-preview:large">
 
 <link rel="canonical" href="https://chasingpoppies.com/">
-<link rel="icon" type="image/png" href="/images/skull-poppies.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96.png">
 <link rel="preload" href="/images/chasing-poppies-hero.webp" imagesrcset="/images/chasing-poppies-hero-720.webp 720w, /images/chasing-poppies-hero.webp 1200w" imagesizes="(max-width: 720px) calc(100vw - 34px), 760px" as="image" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="/index.css">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chasing Poppies">
 <meta property="og:title" content="Chasing Poppies | Phoenix Heavy Rock Band">
-<meta property="og:description" content="Heavy rock from Phoenix—’90s heroin rock, ’00s desert rock, and original music inspired by both.">
+<meta property="og:description" content="Chasing Poppies is a Phoenix heavy rock band playing covers and original music. Find upcoming shows, watch live videos, and get in touch for bookings.">
 <meta property="og:url" content="https://chasingpoppies.com/">
 <meta property="og:image" content="https://chasingpoppies.com/images/about-band-2400.webp">
 <meta property="og:image:alt" content="The four members of Chasing Poppies standing in front of a black metal gate.">
@@ -21,7 +21,7 @@
 <meta property="og:image:height" content="1600">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Chasing Poppies | Phoenix Heavy Rock Band">
-<meta name="twitter:description" content="Heavy rock from Phoenix—covers, original music, live shows, and videos.">
+<meta name="twitter:description" content="Chasing Poppies is a Phoenix heavy rock band playing covers and original music. Find upcoming shows, watch live videos, and get in touch for bookings.">
 <meta name="twitter:image" content="https://chasingpoppies.com/images/about-band-2400.webp">
 <meta name="twitter:image:alt" content="The four members of Chasing Poppies standing in front of a black metal gate.">
 
@@ -40,11 +40,14 @@
   "@context": "https://schema.org",
   "@type": "WebPage",
   "@id": "https://chasingpoppies.com/#webpage",
+  "name": "Chasing Poppies | Phoenix Heavy Rock Band",
   "url": "https://chasingpoppies.com/",
   "isPartOf": {"@id": "https://chasingpoppies.com/#website"},
   "mainEntity": {"@id": "https://chasingpoppies.com/#band"},
   "primaryImageOfPage": {
     "@type": "ImageObject",
+    "@id": "https://chasingpoppies.com/#band-photo",
+    "url": "https://chasingpoppies.com/images/about-band-2400.webp",
     "contentUrl": "https://chasingpoppies.com/images/about-band-2400.webp",
     "width": 2400,
     "height": 1600,
@@ -60,8 +63,17 @@
   "@id": "https://chasingpoppies.com/#band",
   "name": "Chasing Poppies",
   "url": "https://chasingpoppies.com/",
-  "image": "https://chasingpoppies.com/images/about-band-2400.webp",
-  "logo": "https://chasingpoppies.com/images/skull-poppies.png",
+  "description": "Phoenix heavy rock band playing covers and original music inspired by ’90s alternative rock and ’00s desert rock.",
+  "image": {"@id": "https://chasingpoppies.com/#band-photo"},
+  "logo": {
+    "@type": "ImageObject",
+    "@id": "https://chasingpoppies.com/#logo",
+    "url": "https://chasingpoppies.com/images/chasing-poppies-logo-336.png",
+    "contentUrl": "https://chasingpoppies.com/images/chasing-poppies-logo-336.png",
+    "width": 336,
+    "height": 336,
+    "caption": "Chasing Poppies skull and poppies logo"
+  },
   "genre": ["Heavy rock", "Alternative rock", "Desert rock"],
   "foundingLocation": {"@type": "Place", "name": "Phoenix, Arizona"},
   "sameAs": [

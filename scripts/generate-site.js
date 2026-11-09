@@ -176,14 +176,144 @@ function card(event) {
 </article>`;
 }
 
-function generateSource() {
-  const upcomingEvents = events
-    .filter(event => !isArchived(event))
+function upcomingShows(now = Date.now()) {
+  return events
+    .filter(event => !isArchived(event, now))
     .sort((a, b) => Date.parse(a.startDate) - Date.parse(b.startDate));
-  const output = `${upcomingEvents.map(card).join("\n")}\n`;
+}
+
+function showCards(upcomingEvents) {
+  return upcomingEvents.length ? upcomingEvents.map(card).join("\n") : '<p class="section-intro">No upcoming shows announced yet. Check back for new dates, or <a href="/#booking">get in touch to book Chasing Poppies</a>.</p>';
+}
+
+function generateSource() {
+  const output = `${showCards(upcomingShows())}\n`;
   const target = path.join(root, "src/views/components/generated/events.html");
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, output);
+}
+
+function breadcrumbs(event) {
+  const url = event ? `https://chasingpoppies.com/shows/${event.slug}/` : "https://chasingpoppies.com/shows/";
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${url}#breadcrumbs`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://chasingpoppies.com/" },
+      { "@type": "ListItem", position: 2, name: "Shows", item: "https://chasingpoppies.com/shows/" },
+      ...(event ? [{ "@type": "ListItem", position: 3, name: event.name, item: url }] : [])
+    ]
+  };
+}
+
+function siteHeader() {
+  return `<header class="site-header">
+    <a class="brand" href="/" aria-label="Chasing Poppies home">
+      <img src="/images/skull-poppies-96.webp" width="96" height="93" alt="">
+      <span>Chasing Poppies</span>
+    </a>
+    <nav class="site-nav site-nav--detail" aria-label="Primary navigation">
+      <a href="/shows/">Shows</a><a href="/#videos">Videos</a><a href="/#about">About</a><a class="nav-booking" href="/#booking">Booking</a>
+    </nav>
+  </header>`;
+}
+
+function siteFooter() {
+  return `<footer class="site-footer site-footer--detail">
+    <a class="brand brand--footer" href="/"><img src="/images/skull-poppies-96.webp" width="96" height="93" alt=""><span>Chasing Poppies</span></a>
+    <div class="social-links" aria-label="Social media"><a href="https://www.instagram.com/chasingpoppiesband/">Instagram</a><a href="https://www.facebook.com/chasingpoppiesband">Facebook</a><a href="https://www.youtube.com/channel/UCwXXkWcM7_O1M5U2is5q18g">YouTube</a><a href="https://www.tiktok.com/@chasing.poppies">TikTok</a></div>
+    <p>© ${new Date().getFullYear()} Chasing Poppies · Phoenix, Arizona</p>
+  </footer>`;
+}
+
+function showsPage(now = Date.now()) {
+  const canonical = "https://chasingpoppies.com/shows/";
+  const upcoming = upcomingShows(now);
+  const archived = events.filter(event => isArchived(event, now))
+    .sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
+  const title = "Chasing Poppies Shows | Upcoming Concerts & Past Dates";
+  const description = "See upcoming Chasing Poppies shows in Phoenix, Scottsdale, and beyond. Find dates, venues, admission details, flyers, and past performances.";
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { "@id": "https://chasingpoppies.com/#website" },
+    about: { "@id": "https://chasingpoppies.com/#band" },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://chasingpoppies.com/images/about-band-2400.webp",
+      contentUrl: "https://chasingpoppies.com/images/about-band-2400.webp",
+      width: 2400,
+      height: 1600
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      name: "Upcoming Chasing Poppies shows",
+      numberOfItems: upcoming.length,
+      itemListElement: upcoming.map((event, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: event.name,
+        url: `https://chasingpoppies.com/shows/${event.slug}/`
+      }))
+    }
+  };
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="${canonical}">
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96.png">
+  <link rel="stylesheet" href="/index.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Chasing Poppies">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="https://chasingpoppies.com/images/about-band-2400.webp">
+  <meta property="og:image:alt" content="The four members of Chasing Poppies standing in front of a black metal gate.">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1600">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="https://chasingpoppies.com/images/about-band-2400.webp">
+  <meta name="twitter:image:alt" content="The four members of Chasing Poppies standing in front of a black metal gate.">
+  <script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>
+  <script type="application/ld+json">${JSON.stringify(breadcrumbs()).replace(/</g, "\\u003c")}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  ${siteHeader()}
+  <main id="main">
+    <section class="section shows-index" aria-labelledby="shows-title">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Shows</span></nav>
+      <div class="shows-index__header">
+        <div>
+          <p class="eyebrow">Chasing Poppies · Phoenix heavy rock</p>
+          <h1 id="shows-title">Shows</h1>
+          <p class="shows-index__intro">Catch Chasing Poppies live. Find upcoming dates, venues, admission details, and flyers below.</p>
+        </div>
+        <img src="/images/about-band-1200.webp" srcset="/images/about-band-1200.webp 1200w, /images/about-band-2400.webp 2400w" sizes="(max-width: 720px) calc(100vw - 32px), 560px" width="1200" height="800" alt="The four members of Chasing Poppies standing in front of a black metal gate.">
+      </div>
+      <h2 class="shows-index__heading">Upcoming shows</h2>
+      <div class="show-list">${showCards(upcoming)}</div>
+      ${archived.length ? `<h2 class="shows-index__heading">Past shows</h2>
+      <ul class="shows-archive">${archived.map(event => `<li><time datetime="${escapeHtml(event.startDate)}">${escapeHtml(event.dateLabel)}</time><a href="/shows/${event.slug}/">${escapeHtml(event.name)}</a><span>${escapeHtml(event.venue)} · ${escapeHtml(event.city)}, ${escapeHtml(event.state)}</span></li>`).join("\n")}</ul>` : ""}
+    </section>
+  </main>
+  ${siteFooter()}
+</body>
+</html>`;
 }
 
 function detailPage(event) {
@@ -201,9 +331,9 @@ function detailPage(event) {
   <meta name="theme-color" content="#080808">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="${canonical}">
-  <link rel="icon" type="image/png" href="/images/skull-poppies.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96.png">
   <link rel="stylesheet" href="/index.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Chasing Poppies">
@@ -220,22 +350,15 @@ function detailPage(event) {
   <meta name="twitter:image" content="https://chasingpoppies.com${escapeHtml(event.flyer)}">
   <meta name="twitter:image:alt" content="${escapeHtml(event.flyerAlt)}">
   <script type="application/ld+json">${structuredData}</script>
+  <script type="application/ld+json">${JSON.stringify(breadcrumbs(event)).replace(/</g, "\\u003c")}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Chasing Poppies home">
-      <img src="/images/skull-poppies-96.webp" width="96" height="93" alt="">
-      <span>Chasing Poppies</span>
-    </a>
-    <nav class="site-nav site-nav--detail" aria-label="Primary navigation">
-      <a href="/#shows">Shows</a><a href="/#videos">Videos</a><a href="/#about">About</a><a class="nav-booking" href="/#booking">Booking</a>
-    </nav>
-  </header>
+  ${siteHeader()}
   <main class="show-detail" id="main">
     <article class="show-detail__layout">
       <div class="show-detail__copy">
-        <a class="text-link" href="/#shows">← Back to shows</a>
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/shows/">Shows</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(event.name)}</span></nav>
         <p class="eyebrow">${isArchived(event) ? "Archive" : "Upcoming"} · ${escapeHtml(event.dateLabel)}</p>
         <h1>${escapeHtml(event.name)}</h1>
         <p class="show-detail__venue">${escapeHtml(venueLabel)} · ${escapeHtml(event.city)}, ${escapeHtml(event.state)}</p>
@@ -260,24 +383,22 @@ function detailPage(event) {
       <figure class="show-detail__flyer"><img src="${escapeHtml(event.flyer)}" width="${event.flyerWidth}" height="${event.flyerHeight}" alt="${escapeHtml(event.flyerAlt)}"></figure>
     </article>
   </main>
-  <footer class="site-footer site-footer--detail">
-    <a class="brand brand--footer" href="/"><img src="/images/skull-poppies-96.webp" width="96" height="93" alt=""><span>Chasing Poppies</span></a>
-    <div class="social-links" aria-label="Social media"><a href="https://www.instagram.com/chasingpoppiesband/">Instagram</a><a href="https://www.facebook.com/chasingpoppiesband">Facebook</a><a href="https://www.youtube.com/channel/UCwXXkWcM7_O1M5U2is5q18g">YouTube</a><a href="https://www.tiktok.com/@chasing.poppies">TikTok</a></div>
-    <p>© ${new Date().getFullYear()} Chasing Poppies · Phoenix, Arizona</p>
-  </footer>
+  ${siteFooter()}
 </body>
 </html>`;
 }
 
 function generateDist() {
   const dist = path.join(root, "dist");
+  fs.mkdirSync(path.join(dist, "shows"), { recursive: true });
+  fs.writeFileSync(path.join(dist, "shows/index.html"), showsPage());
   events.forEach(event => {
     const directory = path.join(dist, "shows", event.slug);
     fs.mkdirSync(directory, { recursive: true });
     fs.writeFileSync(path.join(directory, "index.html"), detailPage(event));
   });
 
-  const urls = ["https://chasingpoppies.com/", ...events.map(event => `https://chasingpoppies.com/shows/${event.slug}/`)];
+  const urls = ["https://chasingpoppies.com/", "https://chasingpoppies.com/shows/", ...events.map(event => `https://chasingpoppies.com/shows/${event.slug}/`)];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(url => `  <url><loc>${url}</loc></url>`).join("\n")}\n</urlset>\n`;
   fs.writeFileSync(path.join(dist, "sitemap.xml"), sitemap);
   fs.writeFileSync(path.join(dist, "robots.txt"), "User-agent: *\nAllow: /\n\nSitemap: https://chasingpoppies.com/sitemap.xml\n");
@@ -317,4 +438,4 @@ if (require.main === module) {
   } else throw new Error("Usage: node scripts/generate-site.js <source|dist>");
 }
 
-module.exports = { validate, isArchived, eventJsonLd, detailPage };
+module.exports = { validate, isArchived, eventJsonLd, detailPage, showsPage };

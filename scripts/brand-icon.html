@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chasing Poppies brand icon export</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: transparent; }
+    .icon { display: grid; width: var(--size); height: var(--size); place-items: center; background: #080808; }
+    img { display: block; width: calc(var(--size) * 300 / 336); height: auto; }
+  </style>
+  <script>
+    const size = new URLSearchParams(location.search).get("size") === "96" ? 96 : 336;
+    document.documentElement.style.setProperty("--size", `${size}px`);
+  </script>
+</head>
+<body><div class="icon"><img src="../src/images/skull-poppies.png" width="300" height="290" alt="Chasing Poppies skull and poppies logo"></div></body>
+</html>

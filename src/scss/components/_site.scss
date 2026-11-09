@@ -511,6 +511,71 @@ button {
   gap: 20px;
 }
 
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 38px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.breadcrumbs a {
+  color: var(--paper);
+}
+
+.shows-index h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(58px, 8vw, 108px);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 5px 5px 0 var(--blood);
+}
+
+.shows-index__intro {
+  max-width: 600px;
+  color: var(--bone);
+  font-size: 20px;
+}
+
+.shows-index__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+}
+
+.shows-index__header > img {
+  width: 100%;
+  border: 1px solid var(--line);
+}
+
+.section .shows-index__heading {
+  margin: 64px 0 28px;
+  font-size: clamp(28px, 5vw, 48px);
+  line-height: 1.15;
+}
+
+.shows-archive {
+  padding: 0;
+  list-style: none;
+}
+
+.shows-archive li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.shows-archive time,
+.shows-archive span {
+  color: var(--bone);
+}
+
 .show-card {
   position: relative;
   display: grid;
@@ -1430,6 +1495,11 @@ button {
 }
 
 @media (max-width: 720px) {
+  .shows-index__header {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
   :root {
     --page: calc(100% - 32px);
   }

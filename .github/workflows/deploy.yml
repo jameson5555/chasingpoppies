@@ -17,6 +17,8 @@ concurrency:
 jobs:
   web-deploy:
     name: Build and Deploy
+    # Scheduled runs only use GitHub's free standard runners for public repos.
+    if: ${{ github.event_name != 'schedule' || github.event.repository.visibility == 'public' }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code

@@ -216,7 +216,7 @@ function siteHeader() {
       <span>Chasing Poppies</span>
     </a>
     <nav class="site-nav site-nav--detail" aria-label="Primary navigation">
-      <a href="/shows/">Shows</a><a href="/#videos">Videos</a><a href="/#about">About</a><a class="nav-booking" href="/#booking">Booking</a>
+      <a href="/shows/">Shows</a><a href="/#merch">Merch</a><a href="/#videos">Videos</a><a href="/#about">About</a><a class="nav-booking" href="/#booking">Booking</a>
     </nav>
   </header>`;
 }

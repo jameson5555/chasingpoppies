@@ -506,6 +506,76 @@ button {
   pointer-events: none;
 }
 
+.merch {
+  border-block: 1px solid var(--line);
+}
+
+.merch .eyebrow {
+  font-size: 0.875rem;
+}
+
+.merch__intro {
+  max-width: 380px;
+  margin: 0;
+  color: var(--bone);
+  font-size: 1.125rem;
+}
+
+.merch__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.merch-product {
+  margin: 0;
+  border: 1px solid var(--line);
+  background: var(--ink-raised);
+}
+
+.merch-product > img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.merch-product figcaption {
+  padding: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.merch-product h3 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.merch-product p {
+  margin: 8px 0 0;
+  color: var(--bone);
+  font-size: 1rem;
+}
+
+.merch__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 32px;
+}
+
+.merch .button {
+  font-size: 0.875rem;
+}
+
+.merch__actions p {
+  margin: 0;
+  color: var(--bone);
+  font-size: 1rem;
+}
+
 .show-list {
   display: grid;
   gap: 20px;
@@ -1423,6 +1493,10 @@ button {
     --page: min(100% - 48px, 820px);
   }
 
+  .site-nav {
+    gap: 20px;
+  }
+
   .hero {
     min-height: 920px;
     padding-inline: 24px;
@@ -1495,6 +1569,15 @@ button {
 }
 
 @media (max-width: 720px) {
+  .merch__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .merch-product figcaption {
+    padding: 20px;
+  }
+
   .shows-index__header {
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;

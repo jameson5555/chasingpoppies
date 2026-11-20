@@ -507,25 +507,19 @@ button {
 }
 
 .section.merch {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  padding-block: 48px;
+  padding-block: 32px;
   border-block: 1px solid var(--line);
 }
 
-.merch__heading {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-}
-
 .merch h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 24px;
+  font-family: var(--sans);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: normal;
   line-height: 1;
   text-shadow: none;
+  text-transform: none;
 }
 
 .merch__grid {
@@ -533,6 +527,7 @@ button {
   width: min(100%, 344px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
+  margin-bottom: 24px;
 }
 
 .merch-product {
@@ -1549,18 +1544,6 @@ button {
 }
 
 @media (max-width: 720px) {
-  .section.merch {
-    display: block;
-  }
-
-  .merch__heading {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
   .shows-index__header {
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;

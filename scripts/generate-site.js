@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { createHash } = require("node:crypto");
 
 const root = path.resolve(__dirname, "..");
 const eventsPath = path.join(root, "src/data/events.json");
@@ -393,6 +394,21 @@ function detailPage(event) {
 </html>`;
 }
 
+function versionStylesheets(directory) {
+  const version = createHash("sha256").update(fs.readFileSync(path.join(directory, "index.css"))).digest("hex").slice(0, 12);
+  function visit(folder) {
+    for (const entry of fs.readdirSync(folder, { withFileTypes: true })) {
+      const target = path.join(folder, entry.name);
+      if (entry.isDirectory()) visit(target);
+      else if (entry.name.endsWith(".html")) {
+        const html = fs.readFileSync(target, "utf8");
+        fs.writeFileSync(target, html.replace(/href="\/index\.css(?:\?v=[a-f0-9]+)?"/g, `href="/index.css?v=${version}"`));
+      }
+    }
+  }
+  visit(directory);
+}
+
 function generateDist() {
   const dist = path.join(root, "dist");
   fs.mkdirSync(path.join(dist, "shows"), { recursive: true });
@@ -402,6 +418,7 @@ function generateDist() {
     fs.mkdirSync(directory, { recursive: true });
     fs.writeFileSync(path.join(directory, "index.html"), detailPage(event));
   });
+  versionStylesheets(dist);
 
   const photoPages = ["https://chasingpoppies.com/", "https://chasingpoppies.com/shows/"];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -451,4 +468,4 @@ if (require.main === module) {
   } else throw new Error("Usage: node scripts/generate-site.js <source|dist>");
 }
 
-module.exports = { validate, isArchived, eventJsonLd, detailPage, showsPage };
+module.exports = { validate, isArchived, eventJsonLd, detailPage, showsPage, versionStylesheets };

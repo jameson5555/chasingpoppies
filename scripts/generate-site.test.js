@@ -1,10 +1,33 @@
 const assert = require("node:assert/strict");
 const { test } = require("node:test");
-const { validate, isArchived, eventJsonLd, detailPage, showsPage } = require("./generate-site");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
+const { validate, isArchived, eventJsonLd, detailPage, showsPage, versionStylesheets } = require("./generate-site");
 const events = require("../src/data/events.json");
 
 const paidShow = events.find(event => event.slug === "return-of-chasing-poppies-2026");
 const freeShow = events.find(event => event.price === 0);
+
+test("stylesheet updates invalidate cached CSS on the homepage and nested pages", t => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "chasingpoppies-css-"));
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  fs.mkdirSync(path.join(directory, "shows"));
+  const pages = [path.join(directory, "index.html"), path.join(directory, "shows/index.html")];
+  for (const file of pages) fs.writeFileSync(file, '<link rel="stylesheet" href="/index.css">');
+  const css = path.join(directory, "index.css");
+  fs.writeFileSync(css, "body{color:white}");
+  versionStylesheets(directory);
+  const first = fs.readFileSync(pages[0], "utf8");
+  assert.match(first, /href="\/index\.css\?v=[a-f0-9]{12}"/);
+  assert.equal(fs.readFileSync(pages[1], "utf8"), first);
+  versionStylesheets(directory);
+  assert.equal(fs.readFileSync(pages[0], "utf8"), first);
+  fs.writeFileSync(css, "body{color:red}");
+  versionStylesheets(directory);
+  assert.notEqual(fs.readFileSync(pages[0], "utf8"), first);
+  assert.equal(fs.readFileSync(pages[0], "utf8"), fs.readFileSync(pages[1], "utf8"));
+});
 
 test("all published shows have parsable markup and their recorded admission prices", () => {
   validate(events);

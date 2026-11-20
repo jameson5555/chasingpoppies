@@ -4,7 +4,7 @@
 
 - Edit `src/data/events.json` to add or update shows. The build validates the data, renders homepage cards, and creates one page per show at `/shows/{slug}/`.
 - The homepage includes nine curated video cards as a reliable fallback. Production builds with `YOUTUBE_API_KEY` replace them with the latest nine channel uploads longer than 60 seconds.
-- The homepage merch section links to `https://chasingpoppies.square.site/` and uses the owner's product photos at `src/images/merch-tshirt.webp` and `src/images/merch-koozies.webp`. Keep product prices, sizes, availability, and checkout in Square; no Square credentials or API keys are needed. The owner confirmed U.S.-only shipping at $5 per order. Update the visible shipping note in `src/views/index.html` if that policy changes.
+- The compact homepage merch section links to `https://chasingpoppies.square.site/` in a new tab and uses the owner's product photos at `src/images/merch-tshirt.webp` and `src/images/merch-koozies.webp`. Keep product prices, sizes, availability, shipping details, and checkout in Square; no Square credentials or API keys are needed. The owner confirmed U.S.-only shipping at $5 per order.
 - Run `npm run build` before previewing or deploying. Generated metadata includes canonical URLs, `MusicGroup` and per-show `MusicEvent` JSON-LD, a `/shows/` index with upcoming/past dates, breadcrumbs, `sitemap.xml`, and `robots.txt`.
 
 ## Event metadata and search visibility

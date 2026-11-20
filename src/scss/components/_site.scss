@@ -511,15 +511,8 @@ button {
   border-block: 1px solid var(--line);
 }
 
-.merch h2 {
+.merch .section-heading {
   margin-bottom: 24px;
-  font-family: var(--sans);
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: normal;
-  line-height: 1;
-  text-shadow: none;
-  text-transform: none;
 }
 
 .merch__grid {
@@ -531,7 +524,12 @@ button {
 }
 
 .merch-product {
-  margin: 0;
+  display: grid;
+  gap: 8px;
+  color: var(--bone);
+  font-size: 1rem;
+  text-align: center;
+  text-underline-offset: 0.2em;
 }
 
 .merch-product > img {
@@ -540,11 +538,8 @@ button {
   object-fit: contain;
 }
 
-.merch-product figcaption {
-  margin-top: 8px;
-  color: var(--bone);
-  font-size: 1rem;
-  text-align: center;
+.merch-product:hover {
+  color: var(--paper);
 }
 
 .merch .button {

@@ -33,6 +33,7 @@
   --display: "Impact Label", Impact, "Arial Narrow", sans-serif;
   --sans: "Barlow Condensed", "Arial Narrow", ui-sans-serif, sans-serif;
   --page: min(1180px, calc(100vw - 64px));
+  --media-inset: max(32px, calc((100vw - 1180px) / 2));
 }
 
 *,
@@ -507,6 +508,7 @@ button {
 }
 
 .section.merch {
+  width: calc(100% - 2 * var(--media-inset));
   padding-block: 32px;
   border-block: 1px solid var(--line);
 }
@@ -516,10 +518,6 @@ button {
 }
 
 .merch__grid {
-  display: grid;
-  width: min(100%, 344px);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
   margin-bottom: 24px;
 }
 
@@ -801,7 +799,7 @@ button {
 
 .videos {
   width: 100%;
-  padding-inline: max(32px, calc((100vw - 1180px) / 2));
+  padding-inline: var(--media-inset);
   background:
     linear-gradient(rgba(236, 234, 229, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(236, 234, 229, 0.025) 1px, transparent 1px),
@@ -813,7 +811,8 @@ button {
   grid-template-columns: 1fr auto;
 }
 
-.video-grid {
+.video-grid,
+.merch__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
@@ -1546,6 +1545,7 @@ button {
 
   :root {
     --page: calc(100% - 32px);
+    --media-inset: 16px;
   }
 
   html {
@@ -1795,12 +1795,9 @@ button {
     text-decoration: none;
   }
 
-  .videos {
-    padding-inline: 16px;
-  }
-
-  .video-grid {
-    grid-template-columns: 1fr 1fr;
+  .video-grid,
+  .merch__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
 

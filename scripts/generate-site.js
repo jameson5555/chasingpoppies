@@ -4,6 +4,8 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const eventsPath = path.join(root, "src/data/events.json");
 const events = JSON.parse(fs.readFileSync(eventsPath, "utf8"));
+const bandPhotoPath = "/images/about-band-2400.webp";
+const bandPhotoUrl = `https://chasingpoppies.com${bandPhotoPath}`;
 const required = [
   "slug", "name", "dateLabel", "month", "day", "year", "timeLabel",
   "startDate", "venue", "city", "state", "streetAddress", "postalCode",
@@ -245,8 +247,8 @@ function showsPage(now = Date.now()) {
     about: { "@id": "https://chasingpoppies.com/#band" },
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: "https://chasingpoppies.com/images/about-band-2400.webp",
-      contentUrl: "https://chasingpoppies.com/images/about-band-2400.webp",
+      url: bandPhotoUrl,
+      contentUrl: bandPhotoUrl,
       width: 2400,
       height: 1600
     },
@@ -279,14 +281,14 @@ function showsPage(now = Date.now()) {
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="https://chasingpoppies.com/images/about-band-2400.webp">
+  <meta property="og:image" content="${bandPhotoUrl}">
   <meta property="og:image:alt" content="The four members of Chasing Poppies standing in front of a black metal gate.">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1600">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="https://chasingpoppies.com/images/about-band-2400.webp">
+  <meta name="twitter:image" content="${bandPhotoUrl}">
   <meta name="twitter:image:alt" content="The four members of Chasing Poppies standing in front of a black metal gate.">
   <script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumbs()).replace(/</g, "\\u003c")}</script>
@@ -303,7 +305,7 @@ function showsPage(now = Date.now()) {
           <h1 id="shows-title">Shows</h1>
           <p class="shows-index__intro">Catch Chasing Poppies live. Find upcoming dates, venues, admission details, and flyers below.</p>
         </div>
-        <img src="/images/about-band-1200.webp" srcset="/images/about-band-1200.webp 1200w, /images/about-band-2400.webp 2400w" sizes="(max-width: 720px) calc(100vw - 32px), 560px" width="1200" height="800" alt="The four members of Chasing Poppies standing in front of a black metal gate.">
+        <img src="${bandPhotoPath}" srcset="/images/about-band-1200.webp 1200w, ${bandPhotoPath} 2400w" sizes="(max-width: 720px) calc(100vw - 32px), 560px" width="2400" height="1600" alt="The four members of Chasing Poppies standing in front of a black metal gate.">
       </div>
       <h2 class="shows-index__heading">Upcoming shows</h2>
       <div class="show-list">${showCards(upcoming)}</div>
@@ -319,9 +321,12 @@ function showsPage(now = Date.now()) {
 function detailPage(event) {
   const canonical = `https://chasingpoppies.com/shows/${event.slug}/`;
   const venueLabel = event.venueLabel || event.venue;
-  const eventTitle = event.name.includes("Chasing Poppies") ? event.name : `${event.name} — Chasing Poppies`;
+  const eventTitle = event.name.includes("Chasing Poppies") ? event.name : `${event.name} with Chasing Poppies`;
   const title = `${eventTitle} | ${venueLabel} | ${event.dateLabel}`;
-  const description = `Chasing Poppies at ${event.venue} in ${event.city}, ${event.state}, ${event.dateLabel}. ${event.timeLabel.replace(/^.*? · /, "")}. ${event.admission}. ${event.age}.`;
+  const archived = isArchived(event);
+  const description = archived
+    ? `${event.description} ${event.venue} · ${event.city}, ${event.state} · ${event.dateLabel}.`
+    : `Chasing Poppies at ${event.venue} in ${event.city}, ${event.state}, ${event.dateLabel}. ${event.timeLabel.replace(/^.*? · /, "")}. ${event.admission}. ${event.age}.`;
   const structuredData = JSON.stringify(eventJsonLd(event)).replace(/</g, "\\u003c");
   return `<!doctype html>
 <html lang="en">
@@ -359,7 +364,7 @@ function detailPage(event) {
     <article class="show-detail__layout">
       <div class="show-detail__copy">
         <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/shows/">Shows</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(event.name)}</span></nav>
-        <p class="eyebrow">${isArchived(event) ? "Archive" : "Upcoming"} · ${escapeHtml(event.dateLabel)}</p>
+        <p class="eyebrow">${archived ? "Archive" : "Upcoming"} · ${escapeHtml(event.dateLabel)}</p>
         <h1>${escapeHtml(event.name)}</h1>
         <p class="show-detail__venue">${escapeHtml(venueLabel)} · ${escapeHtml(event.city)}, ${escapeHtml(event.state)}</p>
         <p class="show-detail__description">${escapeHtml(event.description)}</p>
@@ -398,8 +403,16 @@ function generateDist() {
     fs.writeFileSync(path.join(directory, "index.html"), detailPage(event));
   });
 
-  const urls = ["https://chasingpoppies.com/", "https://chasingpoppies.com/shows/", ...events.map(event => `https://chasingpoppies.com/shows/${event.slug}/`)];
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(url => `  <url><loc>${url}</loc></url>`).join("\n")}\n</urlset>\n`;
+  const photoPages = ["https://chasingpoppies.com/", "https://chasingpoppies.com/shows/"];
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${photoPages.map(url => `  <url>
+    <loc>${url}</loc>
+    <image:image><image:loc>${bandPhotoUrl}</image:loc></image:image>
+  </url>`).join("\n")}
+${events.map(event => `  <url><loc>https://chasingpoppies.com/shows/${event.slug}/</loc></url>`).join("\n")}
+</urlset>
+`;
   fs.writeFileSync(path.join(dist, "sitemap.xml"), sitemap);
   fs.writeFileSync(path.join(dist, "robots.txt"), "User-agent: *\nAllow: /\n\nSitemap: https://chasingpoppies.com/sitemap.xml\n");
   fs.writeFileSync(path.join(dist, ".htaccess"), `<IfModule mod_deflate.c>
